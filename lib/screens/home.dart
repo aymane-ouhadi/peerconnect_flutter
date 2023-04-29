@@ -24,15 +24,16 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // EventService.fetchRecentEvents("643d8b0a64d5b15895af8a26").then(
-    //   (value) {
-    //     setState(() {
-    //       recentEvents = value;
-    //       print("result: $value");
-    //     });
-    //   }
-    // );
+    
     setState(() {
+      // EventService.fetchRecentEvents("643d8b0a64d5b15895af8a26").then(
+      //   (value) {
+      //     setState(() {
+      //       recentEvents = value;
+      //       print("result: $value");
+      //     });
+      //   }
+      // );
       recentEvents = Samples.fetchEvents(3);
       recentPosts = Samples.fetchPosts(3);
     });
@@ -40,6 +41,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

@@ -13,35 +13,40 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.all(Radius.circular(15))
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            // child: Image.asset(
-            //   "assets/images/barbecue.png", 
-            //   width: double.infinity,
-            // )
-            child: Container(child: Placeholder(), height: 150,),
-          ),
-          Container(
-            padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PostTop(title: post.title, date: post.publishedAt),
-                PostCenter(description: post.description),
-                // PostBottom()
-              ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, "/postDetails");
+      },
+      child: Container(
+        width: double.infinity,
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.all(Radius.circular(15))
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              // child: Image.asset(
+              //   "assets/images/barbecue.png", 
+              //   width: double.infinity,
+              // )
+              child: Container(child: Placeholder(), height: 150,),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PostTop(title: post.title, date: post.publishedAt),
+                  PostCenter(description: post.description),
+                  // PostBottom()
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -63,6 +68,7 @@ class PostTop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: Row(

@@ -45,4 +45,16 @@ class Post {
   String toString() {
     return 'Post(id: $id, publishedAt: $publishedAt, userId: $userId, groupId: $groupId, title: $title, picture: $picture, description: $description)';
   }
+
+  static Post empty() {
+    return Post(
+      id: '',
+      publishedAt: '',
+      userId: '',
+      groupId: '',
+      title: '',
+      picture: '',
+      description: '',
+    );
+  }
 }

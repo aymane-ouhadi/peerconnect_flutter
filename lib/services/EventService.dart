@@ -15,12 +15,14 @@ class EventService {
     };
 
     final response = await http.get(
-      Uri.parse("${Constants.api}/recent").replace(queryParameters: queryParams)
+      Uri.parse("${Constants.api}/events/recent").replace(queryParameters: queryParams)
     );
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = json.decode(response.body);
       final List<Event> events = jsonResponse.map((event) => Event.fromJson(event)).toList();
+
+      print("recent events service : $events");
       
       return events;
     } else {
