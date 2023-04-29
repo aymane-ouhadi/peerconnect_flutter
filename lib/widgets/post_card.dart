@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:peerconnect_flutter/models/Event.dart';
+import 'package:peerconnect_flutter/models/Post.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
 
-class EventCard extends StatelessWidget {
+class PostCard extends StatelessWidget {
 
-  final Event event;
+  final Post post;
 
-  const EventCard({
+  const PostCard({
     Key? key,
-    required this.event  
+    required this.post  
   }) : super(key: key);
 
   @override
@@ -35,9 +35,9 @@ class EventCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                EventTop(title: event.title, date: event.eventDate),
-                EventCenter(description: event.description),
-                EventBottom()
+                PostTop(title: post.title, date: post.publishedAt),
+                PostCenter(description: post.description),
+                // PostBottom()
               ],
             ),
           ),
@@ -49,13 +49,13 @@ class EventCard extends StatelessWidget {
 
 //Helper widgets
 
-class EventTop extends StatelessWidget {
+class PostTop extends StatelessWidget {
 
 
   final String title;
   final String date;
 
-  const EventTop({
+  const PostTop({
     Key? key,
     required this.title,
     required this.date,
@@ -78,7 +78,7 @@ class EventTop extends StatelessWidget {
           ),
           Row(
             children: [
-              Icon(Icons.calendar_month_outlined, size: 16, color: Colors.grey,),
+              Icon(Icons.schedule_outlined, size: 16, color: Colors.grey,),
               SizedBox(width: 5),
               Text(
                 date,
@@ -94,11 +94,11 @@ class EventTop extends StatelessWidget {
   }
 }
 
-class EventCenter extends StatelessWidget {
+class PostCenter extends StatelessWidget {
 
   final String description;
 
-  const EventCenter({
+  const PostCenter({
     Key? key,
     required this.description
   }) : super(key: key);
@@ -117,8 +117,8 @@ class EventCenter extends StatelessWidget {
   }
 }
 
-class EventBottom extends StatelessWidget {
-  const EventBottom({super.key});
+class PostBottom extends StatelessWidget {
+  const PostBottom({super.key});
 
   @override
   Widget build(BuildContext context) {

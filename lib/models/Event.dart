@@ -32,6 +32,20 @@ class Event {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'publishedAt': publishedAt,
+      'userId': userId,
+      'groupId': groupId,
+      'title': title,
+      'picture': picture,
+      'description': description,
+      'eventDate': eventDate,
+    };
+  }
+
+
   @override
   String toString() {
     return 'Event{id: $id, publishedAt: $publishedAt, userId: $userId, groupId: $groupId, title: $title, picture: $picture, description: $description, eventDate: $eventDate}';

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:peerconnect_flutter/models/Event.dart';
+import 'package:peerconnect_flutter/models/Post.dart';
 import 'package:peerconnect_flutter/widgets/event_card.dart';
+import 'package:peerconnect_flutter/widgets/post_card.dart';
 import 'package:peerconnect_flutter/widgets/section_header.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
 
-class Events extends StatelessWidget {
+class Posts extends StatelessWidget {
   
-  const Events({super.key});
+  const Posts({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    // List<Event> recentEvents = Samples.fetchEvents(5);
-    List<Event> recentEvents = ModalRoute.of(context)!.settings.arguments as List<Event>;
+    // List<Event> recentPosts = Samples.fetchPosts(5);
+    List<Post> recentPosts = ModalRoute.of(context)!.settings.arguments as List<Post>;
 
     return Scaffold(
       body: SafeArea(
@@ -22,10 +23,10 @@ class Events extends StatelessWidget {
             child: Column(
               children: [
                 TopBar(isRoot: false),
-                SectionHeader(name: "Recent Events"),
-                ...recentEvents.map((event) => Column(
+                SectionHeader(name: "Recent Posts"),
+                ...recentPosts.map((post) => Column(
                   children: [
-                    EventCard(event: event),
+                    PostCard(post: post),
                     SizedBox(height: 40,)
                   ],
                 )).toList()

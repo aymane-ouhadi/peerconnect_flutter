@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/utils/my_colors.dart';
 
 class TopBar extends StatelessWidget {
 
@@ -17,6 +18,7 @@ class TopBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Row(
         mainAxisAlignment:MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           isRoot ? 
             Text("Logo") 
@@ -25,7 +27,11 @@ class TopBar extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Text("Back"),
+              child: const Icon(
+                Icons.arrow_back_rounded,
+                color: MyColors.primaryColor,
+                size: 30,
+              ),
             ),
 
           Text("Avatar")

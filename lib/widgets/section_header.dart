@@ -6,7 +6,7 @@ import 'package:peerconnect_flutter/utils/my_colors.dart';
 class SectionHeader extends StatelessWidget {
 
   final String name;
-  final String? action; 
+  final Map<String, dynamic>? action; 
 
   const SectionHeader({
     Key? key,
@@ -32,8 +32,12 @@ class SectionHeader extends StatelessWidget {
           ?
             GestureDetector(
               onTap: (){
-                print("See more");
-                Navigator.pushNamed(context, action as String);
+                // print("See more : ${}");
+                Navigator.pushNamed(
+                  context, 
+                  action!.keys.first,
+                  arguments: action!.values.first
+                );
               },
               child: Text(
                 "See More",
