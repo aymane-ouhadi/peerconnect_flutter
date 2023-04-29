@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:peerconnect_flutter/screens/auth/register.dart';
+import 'package:peerconnect_flutter/screens/home.dart';
+import 'package:peerconnect_flutter/screens/register.dart';
 import 'package:peerconnect_flutter/utils/routes.dart';
 
-import 'screens/auth/login.dart';
+import 'screens/login.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,11 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const Scaffold(
-        body: Center(
-          child: Register(),
-        ),
-      ),
+      home: const Home(),
       routes: Routes.map
     );
   }

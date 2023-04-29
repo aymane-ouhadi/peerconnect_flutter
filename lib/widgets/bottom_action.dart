@@ -5,7 +5,15 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 
 class BottomAction extends StatelessWidget {
-  const BottomAction({super.key});
+
+  final String question;
+  final Map<String, Widget> action;
+
+  const BottomAction({
+    Key? key,
+    required this.question,
+    required this.action,
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,7 @@ class BottomAction extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Not a remember?", 
+                question, 
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black
@@ -28,14 +36,19 @@ class BottomAction extends StatelessWidget {
               SizedBox(width: 5,),
               RichText(
                 text: TextSpan(
-                  text: 'Click this link',
+                  text: action.keys.first,
                   style: TextStyle(
                     fontSize: 14,
                     color: MyColors.primaryColor,
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      Navigator.pushNamed(context, '/register');
+                      print(action.values.first);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => action.values.first)
+                      );
+                      // Navigator.pushNamed(context, action.values.first);
                     },
                 ),
               )

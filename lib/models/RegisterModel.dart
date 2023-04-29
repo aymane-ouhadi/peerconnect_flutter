@@ -32,4 +32,9 @@ class RegisterModel {
         confirmPassword = "",
         profilePicture = "",
         coverPicture = "";
+
+  @override
+  String toString() {
+    return 'RegisterModel{firstName: $firstName, lastName: $lastName, email: $email, college: $college, major: $major, password: $password, confirmPassword: $confirmPassword, profilePicture: $profilePicture, coverPicture: $coverPicture}';
+  }
 }
