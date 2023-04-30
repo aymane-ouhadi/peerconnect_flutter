@@ -37,7 +37,7 @@ class EventCard extends StatelessWidget {
               children: [
                 EventTop(title: event.title, date: event.eventDate),
                 EventCenter(description: event.description),
-                EventBottom()
+                EventBottom(isGoing: false,)
               ],
             ),
           ),
@@ -117,25 +117,67 @@ class EventCenter extends StatelessWidget {
   }
 }
 
-class EventBottom extends StatelessWidget {
-  const EventBottom({super.key});
+class EventBottom extends StatefulWidget {
+
+  final bool isGoing;
+
+  const EventBottom({
+    Key? key,
+    required this.isGoing
+  }) : super(key: key);
+
+  @override
+  State<EventBottom> createState() => _EventBottomState();
+}
+
+class _EventBottomState extends State<EventBottom> {
+
+  late bool isGoing;
+
+  @override
+  void initState() {
+    super.initState();
+    isGoing = widget.isGoing;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
+        style: isGoing 
+        ?
+          ElevatedButton.styleFrom(
+            backgroundColor: Colors.grey[200],
+            foregroundColor: Colors.green,
+            elevation: 0
+          )
+        :
+          ElevatedButton.styleFrom(
+            primary: Colors.green,
+            elevation: 0
+          ),
         onPressed: (){
-    
+          setState(() {
+            isGoing = !isGoing;
+          });
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.check_circle_outline),
+              isGoing
+              ?
+                Icon(Icons.check_circle_outline)
+              :
+                Icon(Icons.celebration_outlined),
               SizedBox(width: 10),
-              Text("Going")
+              isGoing
+              ?
+                Text("Already Going")
+              :
+                Text("Up for it")
             ],
           ),
         ),

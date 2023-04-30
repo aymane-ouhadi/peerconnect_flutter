@@ -21,7 +21,10 @@ class TopBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           isRoot ? 
-            Text("Logo") 
+            Container(
+              width: 40,
+              child: Image.asset("assets/images/icon.png"),
+            ) 
           : 
             GestureDetector(
               onTap: () {
@@ -34,7 +37,16 @@ class TopBar extends StatelessWidget {
               ),
             ),
 
-          Text("Avatar")
+          GestureDetector(
+            onTap: (){
+              print("avatar press");
+            },
+            child: Container(
+              width: 50,
+              height: 60,
+              child: Image.asset("assets/images/avatar.png")
+            ),
+          )
         ],
       ),
     );
