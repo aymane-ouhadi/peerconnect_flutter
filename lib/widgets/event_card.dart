@@ -1,15 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
+import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
+import 'package:peerconnect_flutter/utils/samples.dart';
 
-class EventCard extends StatelessWidget {
+class EventCard extends StatefulWidget {
 
   final Event event;
 
-  const EventCard({
+
+  EventCard({
     Key? key,
-    required this.event  
+    required this.event
   }) : super(key: key);
+
+  @override
+  State<EventCard> createState() => _EventCardState();
+}
+
+class _EventCardState extends State<EventCard> {
+  List<User> attendees = Samples.fetchAttendees(1);
+
+  User authenticatedUser = Samples.fetchAuthenticatedUser();
+
+  void handleAttendance() {
+    //Don't forget to add the HTTP request for attendance
+    setState(() {
+      if(attendees.contains(authenticatedUser)){
+        attendees.removeWhere((attendee) => attendee.id == authenticatedUser.id);
+      }
+      else{
+        attendees.add(authenticatedUser);
+      }
+      print("attendees : $attendees");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +53,16 @@ class EventCard extends StatelessWidget {
             //   "assets/images/barbecue.png", 
             //   width: double.infinity,
             // )
-            child: Container(child: Placeholder(), height: 150,),
+            child: Container(child: Placeholder(), height: 150),
           ),
           Container(
             padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                EventTop(title: event.title, date: event.eventDate),
-                EventCenter(description: event.description),
-                EventBottom(isGoing: false,)
+                EventTop(title: widget.event.title, date: widget.event.eventDate),
+                EventCenter(attendees: attendees, description: widget.event.description),
+                EventBottom(isGoing: attendees.contains(authenticatedUser), handleAttendance: handleAttendance)
               ],
             ),
           ),
@@ -98,20 +123,48 @@ class EventCenter extends StatelessWidget {
 
   final String description;
 
+  final List<User> attendees;
+
   const EventCenter({
     Key? key,
-    required this.description
+    required this.description, 
+    required this.attendees
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20),
-      child: Text(
-        style: TextStyle(
-          color: Colors.grey[800]
-        ),
-        Helpers.substring(description, 130)
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Text("$attendees"),
+          Container(
+            margin: EdgeInsets.only(bottom: 25),
+            child: Row(
+              children: [
+                //I should add the attendees bubbles here
+                Text(
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600
+                  ),
+                  attendees.length <= 1
+                  ?
+                    "Be the first one to attend this event"
+                  :
+
+                    "${attendees.length} people are going to the event"
+                ),
+              ],
+            ),
+          ),
+          Text(
+            Helpers.substring(description, 130),
+            style: TextStyle(
+              color: Colors.grey[800]
+            ),
+          )
+        ],
       ),
     );
   }
@@ -121,9 +174,12 @@ class EventBottom extends StatefulWidget {
 
   final bool isGoing;
 
+  final Function handleAttendance;
+
   const EventBottom({
     Key? key,
-    required this.isGoing
+    required this.isGoing, 
+    required this.handleAttendance
   }) : super(key: key);
 
   @override
@@ -150,16 +206,17 @@ class _EventBottomState extends State<EventBottom> {
           ElevatedButton.styleFrom(
             backgroundColor: Colors.grey[200],
             foregroundColor: Colors.green,
-            elevation: 0
+            elevation: 3
           )
         :
           ElevatedButton.styleFrom(
             primary: Colors.green,
-            elevation: 0
+            elevation: 3
           ),
         onPressed: (){
           setState(() {
             isGoing = !isGoing;
+            widget.handleAttendance();
           });
         },
         child: Container(

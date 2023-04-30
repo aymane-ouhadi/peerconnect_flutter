@@ -63,4 +63,10 @@ class User {
       password: '',
     );
   }
+
+  @override
+  String toString() {
+    return 'User{id: $id, firstName: $firstName, lastName: $lastName';
+  }
+  
 }

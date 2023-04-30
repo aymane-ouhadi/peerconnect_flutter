@@ -81,4 +81,45 @@ class Samples {
     );
   }
 
+  static List<User> fetchAttendees(int length){
+    //I should implement a route event/attendees?postId=abc
+    User user = User(
+      id: "abc",
+      firstName: "Aymane",
+      lastName: "Ouhadi",
+      email: "aymaneouhadi17@gmail.com",
+      isConfirmed: true,
+      college: "Le Mans University",
+      major: "Software Engineering",
+      password: "ada"
+    );
+
+    return List.generate(
+      length, 
+      (index) => User(
+        id: "abc",
+        firstName: "Aymane",
+        lastName: "Ouhadi",
+        email: "aymaneouhadi17@gmail.com",
+        isConfirmed: true,
+        college: "Le Mans University",
+        major: "Software Engineering",
+        password: "ada"
+      )
+    );
+  }
+
+  static User fetchAuthenticatedUser(){
+    return User(
+      id: "xaefaifpriapaigjarpg",
+      firstName: "Aymane",
+      lastName: "Ouhadi",
+      email: "aymaneouhadi17@gmail.com",
+      isConfirmed: true,
+      college: "Le Mans University",
+      major: "Software Engineering",
+      password: "ada"
+    );
+  }
+
 }
