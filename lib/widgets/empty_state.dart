@@ -5,12 +5,14 @@ class EmptyState extends StatelessWidget {
   final String image;
   final String title;
   final String? description;
+  final double? width;
 
   const EmptyState({
     Key? key,
     required this.image,
     required this.title,
-    this.description
+    this.description,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class EmptyState extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(image, width: 210),
+          Image.asset(image, width: width ?? 210),
           SizedBox(height: 20),
           Text(title, style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
           SizedBox(height: 10),

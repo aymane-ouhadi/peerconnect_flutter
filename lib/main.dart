@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/screens/home.dart';
+import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/utils/routes.dart';
 
 void main() {
@@ -12,8 +13,25 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: "/home",
+      theme: ThemeData(
+        primarySwatch: MaterialColor(
+          MyColors.primaryColor.value,
+          {
+            50: MyColors.primaryColor.withOpacity(0.1),
+            100: MyColors.primaryColor.withOpacity(0.2),
+            200: MyColors.primaryColor.withOpacity(0.3),
+            300: MyColors.primaryColor.withOpacity(0.4),
+            400: MyColors.primaryColor.withOpacity(0.5),
+            500: MyColors.primaryColor.withOpacity(0.6),
+            600: MyColors.primaryColor.withOpacity(0.7),
+            700: MyColors.primaryColor.withOpacity(0.8),
+            800: MyColors.primaryColor.withOpacity(0.9),
+            900: MyColors.primaryColor.withOpacity(1),
+          }
+        )
+      ),
       home: const Home(),
+      initialRoute: "/home",
       routes: Routes.map
     );
   }

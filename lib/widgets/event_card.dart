@@ -211,7 +211,8 @@ class _EventBottomState extends State<EventBottom> {
           )
         :
           ElevatedButton.styleFrom(
-            primary: Colors.green,
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
             elevation: 3
           ),
         onPressed: (){

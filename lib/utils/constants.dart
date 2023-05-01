@@ -30,7 +30,7 @@ class Constants {
     "/profile": {
       "Profile": (bool isActive) {
         return Icon(
-          Icons.person_3_outlined,
+          Icons.person_2_outlined,
           color: isActive ? MyColors.primaryColor : Colors.black,
         );
       } 
