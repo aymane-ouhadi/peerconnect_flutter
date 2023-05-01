@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
+import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/services/eventService.dart';
 import 'package:peerconnect_flutter/widgets/empty_state.dart';
 import 'package:peerconnect_flutter/widgets/event_card.dart';
@@ -44,6 +45,7 @@ class _HomeState extends State<Home> {
 
 
     return Scaffold(
+      bottomNavigationBar: UIService.buildAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

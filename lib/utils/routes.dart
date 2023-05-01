@@ -5,6 +5,7 @@ import 'package:peerconnect_flutter/screens/login.dart';
 import 'package:peerconnect_flutter/screens/posts.dart';
 import 'package:peerconnect_flutter/screens/register.dart';
 import 'package:peerconnect_flutter/screens/events.dart';
+import 'package:peerconnect_flutter/screens/search.dart';
 
 class Routes {
   static final Map<String, Widget Function(BuildContext)> map = {
@@ -14,5 +15,6 @@ class Routes {
     "/events": (BuildContext context) => const Events(),
     "/posts": (BuildContext context) => const Posts(),
     "/postDetails": (BuildContext context) => const PostScreen(),
+    "/search": (BuildContext context) => const Search(),
   }; 
 }
