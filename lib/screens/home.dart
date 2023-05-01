@@ -27,15 +27,15 @@ class _HomeState extends State<Home> {
     super.initState();
     
     setState(() {
-      // EventService.fetchRecentEvents("643d8b0a64d5b15895af8a26").then(
-      //   (value) {
-      //     setState(() {
-      //       recentEvents = value;
-      //       print("result: $value");
-      //     });
-      //   }
-      // );
-      recentEvents = Samples.fetchEvents(3);
+      EventService.fetchRecentEvents("643d8b0a64d5b15895af8a26").then(
+        (value) {
+          setState(() {
+            recentEvents = value;
+            print("result: $value");
+          });
+        }
+      );
+      // recentEvents = Samples.fetchEvents(3);
       recentPosts = Samples.fetchPosts(3);
     });
   }

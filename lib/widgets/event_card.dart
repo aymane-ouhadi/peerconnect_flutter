@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:peerconnect_flutter/services/ComfortService.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
 import 'package:peerconnect_flutter/utils/samples.dart';
 
@@ -60,7 +61,7 @@ class _EventCardState extends State<EventCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                EventTop(title: widget.event.title, date: widget.event.eventDate),
+                EventTop(title: widget.event.title, date: ComfortService.formatDate(widget.event.eventDate)),
                 EventCenter(attendees: attendees, description: widget.event.description),
                 EventBottom(isGoing: attendees.contains(authenticatedUser), handleAttendance: handleAttendance)
               ],

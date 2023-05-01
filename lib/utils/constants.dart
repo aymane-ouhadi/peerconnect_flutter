@@ -8,7 +8,7 @@ typedef IconBuilder = Icon Function(bool isActive);
 class Constants {
 
 
-  static String api = "http://10.188.201.111:8080";
+  static String api = "http://192.168.30.27:8080";
   
   static Map<String, Map<String, IconBuilder>> routes = {
     "/home": {
@@ -30,7 +30,7 @@ class Constants {
     "/profile": {
       "Profile": (bool isActive) {
         return Icon(
-          Icons.person_2_outlined,
+          Icons.person_3_outlined,
           color: isActive ? MyColors.primaryColor : Colors.black,
         );
       } 
