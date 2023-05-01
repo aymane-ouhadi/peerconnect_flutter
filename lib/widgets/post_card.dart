@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
+import 'package:peerconnect_flutter/services/ComfortService.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
 
 class PostCard extends StatelessWidget {
@@ -15,7 +16,7 @@ class PostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, "/postDetails");
+        Navigator.pushNamed(context, "/postDetails", arguments: post.id);
       },
       child: Container(
         width: double.infinity,
@@ -39,7 +40,7 @@ class PostCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PostTop(title: post.title, date: post.publishedAt),
+                  PostTop(title: post.title, date: ComfortService.toTimeAgo(post.publishedAt)),
                   PostCenter(description: post.description),
                   // PostBottom()
                 ],

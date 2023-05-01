@@ -43,7 +43,7 @@ class BottomAction extends StatelessWidget {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      print(action.values.first);
+                      // print(action.values.first);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => action.values.first)

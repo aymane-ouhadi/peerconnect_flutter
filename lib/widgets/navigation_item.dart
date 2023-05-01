@@ -40,7 +40,7 @@ class _MyNavigationItemState extends State<MyNavigationItem> {
   @override
   Widget build(BuildContext context) {
 
-    print(_currentRoute);
+    // print(_currentRoute);
 
 
     //Checking if the current is the same as the icon to activate it
@@ -59,7 +59,7 @@ class _MyNavigationItemState extends State<MyNavigationItem> {
               setState(() {
                 // isActive = !isActive;
                 Navigator.pushReplacementNamed(context, widget.route.key);
-                print("target : ${widget.route.key}");
+                // print("target : ${widget.route.key}");
               });
             },
           ),

@@ -61,8 +61,8 @@ class _LoginState extends State<Login> {
                 ),
                 child: const Text("Sign In"),
                 onPressed: (){
-                  print("Email : ${loginModel.email}");
-                  print("Password : ${loginModel.password}");
+                  // print("Email : ${loginModel.email}");
+                  // print("Password : ${loginModel.password}");
                 }, 
               ),
               BottomAction(

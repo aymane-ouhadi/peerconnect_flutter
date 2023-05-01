@@ -22,7 +22,7 @@ class EventService {
       final List<dynamic> jsonResponse = json.decode(response.body);
       final List<Event> events = jsonResponse.map((event) => Event.fromJson(event)).toList();
 
-      print("recent events service : $events");
+      // print("recent events service : $events");
       
       return events;
     } else {

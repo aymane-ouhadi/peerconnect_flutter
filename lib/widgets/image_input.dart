@@ -116,7 +116,7 @@ class _ImageInputState extends State<ImageInput> {
                     GestureDetector(
                       onTap: (){
                         setState(() {
-                          print("Show");
+                          // print("Show");
                           isVisible = !isVisible;
                         });
                       },
@@ -131,7 +131,7 @@ class _ImageInputState extends State<ImageInput> {
                         setState(() {
                           image = null;
                           isVisible = false;
-                          print("Cancel");
+                          // print("Cancel");
                         });
                       },
                       child: Text(

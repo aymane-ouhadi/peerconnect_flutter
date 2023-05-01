@@ -106,7 +106,7 @@ class _RegisterState extends State<Register> {
                 ),
                 child: const Text("Sign Up"),
                 onPressed: (){
-                  print("Data : $registerModel");
+                  // print("Data : $registerModel");
                 }, 
               ),
               BottomAction(

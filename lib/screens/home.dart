@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
+import 'package:peerconnect_flutter/services/PostService.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/services/eventService.dart';
 import 'package:peerconnect_flutter/widgets/empty_state.dart';
@@ -23,20 +24,26 @@ class _HomeState extends State<Home> {
   List<Post> recentPosts = List.empty();
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     
     setState(() {
       EventService.fetchRecentEvents("643d8b0a64d5b15895af8a26").then(
         (value) {
           setState(() {
             recentEvents = value;
-            print("result: $value");
+          });
+        }
+      );
+      PostService.fetchRecentPosts("643d8b0a64d5b15895af8a26").then(
+        (value) {
+          setState(() {
+            recentPosts = value;
           });
         }
       );
       // recentEvents = Samples.fetchEvents(3);
-      recentPosts = Samples.fetchPosts(3);
+      // recentPosts = Samples.fetchPosts(3);
     });
   }
 
@@ -59,7 +66,7 @@ class _HomeState extends State<Home> {
                     "/events": recentEvents
                   }
                 ),
-                recentEvents.length == 0 
+                recentEvents.length <= 0 
                 ? 
                   EmptyState(
                     image: "assets/images/emptystate_news.png",
@@ -75,7 +82,7 @@ class _HomeState extends State<Home> {
                     "/posts": recentPosts
                   }
                 ),
-                recentEvents.length == 0 
+                recentPosts.length <= 0 
                 ? 
                   EmptyState(
                     image: "assets/images/emptystate_news.png",

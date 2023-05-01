@@ -39,7 +39,7 @@ class TopBar extends StatelessWidget {
 
           GestureDetector(
             onTap: (){
-              print("avatar press");
+              // print("avatar press");
             },
             child: Container(
               width: 50,

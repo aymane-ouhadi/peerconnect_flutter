@@ -1,6 +1,8 @@
 //This class is a service that has static methods to format UI components
+//All you'll see here is some methods I isolated here to keep the widgets as clean as possible
 
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ComfortService {
 
@@ -34,5 +36,11 @@ class ComfortService {
   return finalString;
 }
 
+  static String toTimeAgo(String dateString) {
+    final dateTime = DateTime.parse(dateString);
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+    return timeago.format(now.subtract(difference));
+  }
 
 }

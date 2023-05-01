@@ -33,7 +33,7 @@ class _EventCardState extends State<EventCard> {
       else{
         attendees.add(authenticatedUser);
       }
-      print("attendees : $attendees");
+      // print("attendees : $attendees");
     });
   }
 

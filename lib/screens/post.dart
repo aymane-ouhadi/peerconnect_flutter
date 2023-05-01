@@ -4,6 +4,7 @@ import 'package:peerconnect_flutter/models/Like.dart';
 import 'package:peerconnect_flutter/models/PostDetailsModel.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:peerconnect_flutter/services/PostService.dart';
 import 'package:peerconnect_flutter/utils/samples.dart';
 import 'package:peerconnect_flutter/widgets/comment_card.dart';
 import 'package:peerconnect_flutter/widgets/comment_form.dart';
@@ -22,16 +23,25 @@ class _PostState extends State<PostScreen> {
   PostDetailsModel? postDetailsModel = PostDetailsModel.empty();
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     
-    setState(() {
-      postDetailsModel = Samples.fetchPost();
-    });
+    final postId = ModalRoute.of(context)!.settings.arguments as String;
+
+    PostService.fetchPostDetails(postId).then(
+      (value){
+        setState(() {
+          postDetailsModel = value;
+          // postDetailsModel = Samples.fetchPost();
+        });
+      }
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -136,7 +146,11 @@ class _PostContentState extends State<PostContent> {
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Column(
         children: [
-          Text(widget.post.description),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.post.description)
+            ]),
           SizedBox(height: 30),
           Container(
             width: double.infinity,
@@ -177,7 +191,7 @@ class _PostContentState extends State<PostContent> {
                   GestureDetector(
                     onTap: () {
                     },
-                    child: Icon(Icons.favorite_outline, size: 25,),
+                    child: Icon(Icons.chat_bubble_outline_outlined, size: 23,),
                   ),
                   SizedBox(height: 5),
                   Text("${widget.comments.length}")
@@ -230,7 +244,7 @@ class _PostBottomState extends State<PostBottom> {
       comments.add(comment);
     });
 
-    print(comment);
+    // print(comment);
   }
 
   
