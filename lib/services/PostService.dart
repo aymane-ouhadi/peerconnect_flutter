@@ -35,21 +35,6 @@ class PostService {
     String postId
   ) async {
 
-    // final queryParams = {
-    //   'postId': postId
-    // };
-
-    // final response = await http.get(
-    //   Uri.parse("${Constants.api}/posts/details").replace(queryParameters: queryParams)
-    // );
-
-    // final Map<String, dynamic> jsonResponse = json.decode(response.body);
-    // // print("post: ${jsonResponse["post"]}");
-    // // print("group: ${jsonResponse["group"]}");
-    // print("user: ${jsonResponse["user"]}");
-
-    // return PostDetailsModel.empty();
-
     final queryParams = {
       'postId': postId
     };
