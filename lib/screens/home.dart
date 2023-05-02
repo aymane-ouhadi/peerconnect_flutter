@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/PostService.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/services/eventService.dart';
@@ -10,6 +11,7 @@ import 'package:peerconnect_flutter/widgets/post_card.dart';
 import 'package:peerconnect_flutter/widgets/section_header.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
 import 'package:peerconnect_flutter/utils/samples.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -28,14 +30,17 @@ class _HomeState extends State<Home> {
     super.didChangeDependencies();
     
     setState(() {
-      EventService.fetchRecentEvents("643d8b0a64d5b15895af8a26").then(
+      
+      AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
+
+      EventService.fetchRecentEvents(provider.user.id).then(
         (value) {
           setState(() {
             recentEvents = value;
           });
         }
       );
-      PostService.fetchRecentPosts("643d8b0a64d5b15895af8a26").then(
+      PostService.fetchRecentPosts(provider.user.id).then(
         (value) {
           setState(() {
             recentPosts = value;
@@ -55,46 +60,51 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: UIService.buildAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              children: [
-                TopBar(isRoot: true),
-                SectionHeader(
-                  name: "Events",
-                  action: {
-                    "/events": recentEvents
-                  }
+          child: Consumer<AuthProvider>(
+            builder: (BuildContext context, AuthProvider provider, Widget? widget) {
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                child: Column(
+                  children: [
+                    TopBar(isRoot: true),
+                    Text(provider.user.toString()),
+                    SectionHeader(
+                      name: "Events",
+                      action: {
+                        "/events": recentEvents
+                      }
+                    ),
+                    recentEvents.length <= 0 
+                    ? 
+                      EmptyState(
+                        image: "assets/images/emptystate_news.png",
+                        title: "No events",
+                        description: "You're all caught up",
+                      )   
+                    :
+                      EventCard(event: recentEvents[0])
+                    ,
+                    SectionHeader(
+                      name: "Posts",
+                      action: {
+                        "/posts": recentPosts
+                      }
+                    ),
+                    recentPosts.length <= 0 
+                    ? 
+                      EmptyState(
+                        image: "assets/images/emptystate_news.png",
+                        title: "No posts",
+                        description: "You're all caught up",
+                      )   
+                    :
+                      PostCard(post: recentPosts[0])
+                    ,
+                    SizedBox(height: 50,)
+                  ],
                 ),
-                recentEvents.length <= 0 
-                ? 
-                  EmptyState(
-                    image: "assets/images/emptystate_news.png",
-                    title: "No events",
-                    description: "You're all caught up",
-                  )   
-                :
-                  EventCard(event: recentEvents[0])
-                ,
-                SectionHeader(
-                  name: "Posts",
-                  action: {
-                    "/posts": recentPosts
-                  }
-                ),
-                recentPosts.length <= 0 
-                ? 
-                  EmptyState(
-                    image: "assets/images/emptystate_news.png",
-                    title: "No posts",
-                    description: "You're all caught up",
-                  )   
-                :
-                  PostCard(post: recentPosts[0])
-                ,
-                SizedBox(height: 50,)
-              ],
-            ),
+              );
+            }
           ),
         ),
       ),

@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/screens/home.dart';
+import 'package:peerconnect_flutter/screens/login.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/utils/routes.dart';
 
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
+
+import 'package:provider/provider.dart';
+
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider<AuthProvider>(
+      create: (_) => AuthProvider(),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -31,7 +41,7 @@ class MainApp extends StatelessWidget {
         )
       ),
       home: const Home(),
-      initialRoute: "/home",
+      initialRoute: "/login",
       routes: Routes.map
     );
   }

@@ -33,4 +33,31 @@ class UserService {
     }
   }
 
+  static Future<User> fetchUserByEmail(
+    String email
+  ) async {
+    final queryParams = {
+      'email': email
+    };
+
+    final response = await http.get(
+      Uri.parse("${Constants.api}/users/findByEmail").replace(queryParameters: queryParams)
+    );
+
+    print("what abt this : ${response.statusCode}");
+
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      final User user = User.fromJson(jsonResponse);
+      
+      print("uri : ${Uri.parse("${Constants.api}/users/findByEmail").replace(queryParameters: queryParams)}");
+
+      return user;
+      
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
 }

@@ -13,6 +13,7 @@ dependencies:
   http:
   intl:
   timeago:
+  provider:
 
 dev_dependencies:
   flutter_test:

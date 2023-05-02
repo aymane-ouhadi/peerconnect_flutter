@@ -102,7 +102,8 @@ class _RegisterState extends State<Register> {
                   minimumSize: const Size(double.infinity, 0),
                   elevation: 0,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  backgroundColor: MyColors.primaryColor
+                  backgroundColor: MyColors.primaryColor,
+                  foregroundColor: Colors.white,
                 ),
                 child: const Text("Sign Up"),
                 onPressed: (){
