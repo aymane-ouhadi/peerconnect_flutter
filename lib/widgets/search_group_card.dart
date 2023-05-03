@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/models/GroupDetailsModel.dart';
 import 'package:peerconnect_flutter/models/GroupSearchModel.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
+import 'package:peerconnect_flutter/services/GroupService.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:provider/provider.dart';
 
 class SearchGroupCard extends StatelessWidget {
 
@@ -14,8 +18,20 @@ class SearchGroupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        print("group");
+      onTap: () async {
+
+        AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
+
+        GroupDetailsModel groupDetailsModel = await GroupService.fetchGroupDetails(
+          provider.user.id, 
+          group.group.id
+        );
+
+        Navigator.pushNamed(
+          context, 
+          "/groupDetails",
+          arguments: groupDetailsModel
+        );
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 40),

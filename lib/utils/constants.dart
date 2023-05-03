@@ -36,4 +36,15 @@ class Constants {
       } 
     },
   };
+
+  static List<Map<String, dynamic>> bottomSheetOptions = [
+    {
+      "icon": Icon(Icons.person_outline),
+      "title": "Visit your profile"
+    },
+    {
+      "icon": Icon(Icons.logout),
+      "title": "Log out of your account"
+    },
+  ];
 }

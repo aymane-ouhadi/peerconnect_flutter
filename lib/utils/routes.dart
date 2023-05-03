@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peerconnect_flutter/screens/group.dart';
 import 'package:peerconnect_flutter/screens/post.dart';
 import 'package:peerconnect_flutter/screens/home.dart';
 import 'package:peerconnect_flutter/screens/login.dart';
@@ -18,5 +19,6 @@ class Routes {
     "/postDetails": (BuildContext context) => const PostScreen(),
     "/search": (BuildContext context) => const Search(),
     "/profile": (BuildContext context) => const Profile(),
+    "/groupDetails": (BuildContext context) => const GroupScreen(),
   }; 
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
+import 'package:peerconnect_flutter/widgets/bottom_sheet.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:provider/provider.dart';
 
-class TopBar extends StatelessWidget {
+class TopBar extends StatefulWidget {
 
   final bool isRoot;
 
@@ -13,6 +16,18 @@ class TopBar extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<TopBar> createState() => _TopBarState();
+}
+
+class _TopBarState extends State<TopBar> {
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+      AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
@@ -20,7 +35,7 @@ class TopBar extends StatelessWidget {
         mainAxisAlignment:MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          isRoot ? 
+          widget.isRoot ? 
             Container(
               width: 40,
               child: Image.asset("assets/images/icon.png"),
@@ -39,7 +54,19 @@ class TopBar extends StatelessWidget {
 
           GestureDetector(
             onTap: (){
-              // print("avatar press");
+              print("avatar press");
+              showModalBottomSheet(
+                context: context,
+                shape: const RoundedRectangleBorder(  
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+                builder: (BuildContext context) {
+                  return MyBottomSheet();
+                },
+              );
             },
             child: Container(
               width: 50,
