@@ -1,4 +1,4 @@
-import 'package:peerconnect_flutter/models/Group.dart';
+import 'package:peerconnect_flutter/models/group.dart';
 
 class GroupSearchModel {
   final Group group;

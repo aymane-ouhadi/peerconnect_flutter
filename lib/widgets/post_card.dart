@@ -18,35 +18,40 @@ class PostCard extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, "/postDetails", arguments: post.id);
       },
-      child: Container(
-        width: double.infinity,
-        clipBehavior: Clip.hardEdge,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(15))
-        ),
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              // child: Image.asset(
-              //   "assets/images/barbecue.png", 
-              //   width: double.infinity,
-              // )
-              child: Container(child: Placeholder(), height: 150,),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  PostTop(title: post.title, date: ComfortService.toTimeAgo(post.publishedAt)),
-                  PostCenter(description: post.description),
-                  // PostBottom()
-                ],
+      child: Material(
+        elevation: 5,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        child: Container(
+          width: double.infinity,
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(15))
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(0),
+                width: double.infinity,
+                child: Image.asset(
+                  "assets/images/barbecue.png", 
+                  fit: BoxFit.fill,
+                  width: double.infinity,
+                )
+                // child: Container(child: Placeholder(), height: 150,),
               ),
-            ),
-          ],
+              Container(
+                padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PostTop(title: post.title, date: ComfortService.toTimeAgo(post.publishedAt)),
+                    PostCenter(description: post.description),
+                    // PostBottom()
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

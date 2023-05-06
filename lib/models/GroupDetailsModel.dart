@@ -1,4 +1,4 @@
-import 'package:peerconnect_flutter/enumerations/RequestState.dart';
+import 'package:peerconnect_flutter/enumerations/requestState.dart';
 import 'package:peerconnect_flutter/models/Group.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
@@ -7,7 +7,7 @@ import 'package:peerconnect_flutter/models/Post.dart';
 class GroupDetailsModel {
   final Group group;
   final bool isMember;
-  final RequestState? requestState;
+  final String? requestState;
   final List<User> members;
   final List<Event> events;
   final List<Post> posts;

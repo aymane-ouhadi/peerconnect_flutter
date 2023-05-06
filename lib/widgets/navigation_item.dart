@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:provider/provider.dart';
 
 class MyNavigationItem extends StatefulWidget {
 
@@ -50,15 +52,25 @@ class _MyNavigationItemState extends State<MyNavigationItem> {
 
 
 
+
+
     return Container(
       child: Column(
         children: [
           IconButton(
             icon: widget.route.value.values.first(isActive),
             onPressed: () {
+              AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
+
               setState(() {
+                if(widget.route.value.keys.contains("onTap")) {
+                  widget.route.value["onTap"]!(context, provider.user.id);
+                }
+                else {
+                  Navigator.pushReplacementNamed(context, widget.route.key);
+                }
+
                 // isActive = !isActive;
-                Navigator.pushReplacementNamed(context, widget.route.key);
                 // print("target : ${widget.route.key}");
               });
             },

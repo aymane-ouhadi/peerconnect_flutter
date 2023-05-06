@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'dart:io';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/services/UserService.dart';
 import 'package:peerconnect_flutter/utils/constants.dart';
@@ -51,6 +52,21 @@ class AuthenticationService {
     catch(e){
       print("This is the error : $e");
       return null;
+    }
+  }
+
+  static Future<bool> isInternetConnected() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+        return true;
+      } else {
+        return false;
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      return false;
     }
   }
 

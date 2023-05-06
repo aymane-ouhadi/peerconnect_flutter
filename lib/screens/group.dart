@@ -40,7 +40,7 @@ class GroupScreen extends StatelessWidget {
                       name: groupDetailsModel.group.name,
                       members: groupDetailsModel.members,
                       isMember: groupDetailsModel.isMember,
-                      requestState: groupDetailsModel.requestState as RequestState,
+                      requestState: groupDetailsModel.requestState as String,
                     ),
                   ],
                 ),
@@ -57,10 +57,15 @@ class PageInfo extends StatelessWidget {
 
   final String name;
   final List<User> members;
-  final RequestState requestState;
+  final String requestState;
   final bool isMember;
 
-  const PageInfo({super.key, required this.name, required this.members, required this.isMember, required this.requestState});
+  // final _tabs = [
+  //   Tab(text: 'Tab1'),
+  //   Tab(text: 'Tab2'),
+  // ];
+
+  PageInfo({super.key, required this.name, required this.members, required this.isMember, required this.requestState});
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +91,7 @@ class PageInfo extends StatelessWidget {
               "${members.length} members",
               style: TextStyle(color: Colors.grey),
             ),
+          SizedBox(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -93,7 +99,8 @@ class PageInfo extends StatelessWidget {
                 requestState: requestState,
               )
             ],
-          )
+          ),
+          // TabBar(tabs: _tabs)
         ],
       ),
     );

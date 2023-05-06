@@ -43,4 +43,9 @@ class Group {
       rules: [],
     );
   }
+
+  @override
+  String toString() {
+    return "Group: ${name}";
+  }
 }

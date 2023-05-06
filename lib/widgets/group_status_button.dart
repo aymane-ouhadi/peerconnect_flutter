@@ -5,7 +5,7 @@ import 'package:peerconnect_flutter/enumerations/RequestState.dart';
 
 class GroupStatusButton extends StatelessWidget {
 
-  final RequestState? requestState;
+  final String? requestState;
 
   const GroupStatusButton({super.key, required this.requestState});
 
@@ -13,20 +13,26 @@ class GroupStatusButton extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (requestState) {
 
-      case RequestState.ACCEPTED:
+      case "ACCEPTED":
         return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.grey[200],
+            foregroundColor: Colors.green,
+            elevation: 3
+          ),
           onPressed: (){
 
           },
           child: Row(
             children: [
               Icon(Icons.check_circle_outline_outlined),
+              SizedBox(width: 10),
               Text("Already a member")
             ],
           ),
         );
 
-      case RequestState.PENDING:
+      case "PENDING":
         return ElevatedButton(
           onPressed: (){
 
@@ -39,7 +45,7 @@ class GroupStatusButton extends StatelessWidget {
           ),
         );
 
-      case null:
+      default:
         return ElevatedButton(
           onPressed: (){
 

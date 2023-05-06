@@ -47,8 +47,6 @@ class _HomeState extends State<Home> {
           });
         }
       );
-      // recentEvents = Samples.fetchEvents(3);
-      // recentPosts = Samples.fetchPosts(3);
     });
   }
 
@@ -67,7 +65,7 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     TopBar(isRoot: true),
-                    Text(provider.user.toString()),
+                    // Text(provider.user.toString()),
                     SectionHeader(
                       name: "Events",
                       action: {

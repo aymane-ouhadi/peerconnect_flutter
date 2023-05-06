@@ -146,18 +146,25 @@ class _PostContentState extends State<PostContent> {
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(widget.post.description)
-            ]),
+          Container(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.post.description)
+              ]),
+          ),
           SizedBox(height: 30),
           Container(
             width: double.infinity,
             child: Container(
               width: double.infinity,
               height: 200,
-              child: Placeholder(),
+              child: Image.asset(
+                "assets/images/barbecue.png", 
+                fit: BoxFit.fill,
+                width: double.infinity,
+              ),
             ),
           ),
           SizedBox(height: 30),

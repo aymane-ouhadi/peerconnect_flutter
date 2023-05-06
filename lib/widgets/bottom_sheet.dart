@@ -11,14 +11,10 @@ class MyBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 400,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(
-          top: BorderSide(
-            color: MyColors.primaryColor,
-            width: 8
-          )
-        )
+        border: Border.all(color: MyColors.primaryColor, width: 6),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))
       ),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 32),
@@ -37,7 +33,7 @@ class MyBottomSheet extends StatelessWidget {
               ...Constants.bottomSheetOptions.map(
                 (option){
                   return BottomSheetElement(
-                    option: option,
+                    option: option
                   );
                 }
               )
