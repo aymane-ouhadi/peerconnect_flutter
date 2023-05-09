@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
                     recentEvents.length <= 0 
                     ? 
                       EmptyState(
-                        image: "assets/images/emptystate_news.png",
+                        image: "assets/images/emptystate_events.png",
                         title: "No events",
                         description: "You're all caught up",
                       )   

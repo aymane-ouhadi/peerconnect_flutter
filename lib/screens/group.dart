@@ -7,10 +7,25 @@ import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/widgets/group_status_button.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
+import 'package:peerconnect_flutter/widgets/whats_on_your_mind.dart';
 
-class GroupScreen extends StatelessWidget {
+class GroupScreen extends StatefulWidget {
 
   const GroupScreen({super.key});
+
+  @override
+  State<GroupScreen> createState() => _GroupScreenState();
+}
+
+class _GroupScreenState extends State<GroupScreen> with SingleTickerProviderStateMixin{
+
+  TabController? tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    tabController = TabController(length: 2, vsync: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +48,7 @@ class GroupScreen extends StatelessWidget {
                 child: Placeholder(),
               ),
               Container(
+                width: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Column(
                   children: [
@@ -100,6 +116,7 @@ class PageInfo extends StatelessWidget {
               )
             ],
           ),
+          WhatsOnYourMind()
           // TabBar(tabs: _tabs)
         ],
       ),

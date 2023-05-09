@@ -28,14 +28,11 @@ class _MyNavigationItemState extends State<MyNavigationItem> {
     super.initState();
 
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _currentRoute = ModalRoute.of(context)?.settings.name;
       });
     });
-    // setState(() {
-    //   if(widget.route.)
-    // });
     
   }
 

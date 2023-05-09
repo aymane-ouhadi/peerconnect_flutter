@@ -12,7 +12,7 @@ typedef IconBuilder = Function;
 class Constants {
 
 
-  static String api = "http://192.168.71.27:8080";
+  static String api = "http://192.168.46.27:8080";
   
   static Map<String, Map<String, IconBuilder>> routes = {
     "/home": {

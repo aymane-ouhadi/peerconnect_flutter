@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peerconnect_flutter/screens/choice.dart';
 import 'package:peerconnect_flutter/screens/group.dart';
 import 'package:peerconnect_flutter/screens/groups.dart';
 import 'package:peerconnect_flutter/screens/post.dart';
@@ -22,5 +23,6 @@ class Routes {
     "/profile": (BuildContext context) => const Profile(),
     "/groupDetails": (BuildContext context) => const GroupScreen(),
     "/groups": (BuildContext context) => const Groups(),
+    "/choice": (BuildContext context) => const ChoiceScreen(),
   }; 
 }
