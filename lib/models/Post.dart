@@ -1,11 +1,11 @@
 class Post {
   final String id;
   final String publishedAt;
-  final String userId;
-  final String groupId;
-  final String title;
-  final String picture;
-  final String description;
+  String userId;
+  String groupId;
+  String title;
+  String picture;
+  String description;
 
   Post({
     required this.id,

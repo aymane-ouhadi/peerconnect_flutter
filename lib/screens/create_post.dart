@@ -1,0 +1,112 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/models/CreatePostModel.dart';
+import 'package:peerconnect_flutter/services/PostService.dart';
+import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:peerconnect_flutter/widgets/bottom_action.dart';
+import 'package:peerconnect_flutter/widgets/image_input.dart';
+import 'package:peerconnect_flutter/widgets/section_header.dart';
+import 'package:peerconnect_flutter/widgets/text_input.dart';
+import 'package:peerconnect_flutter/models/Post.dart';
+import 'package:peerconnect_flutter/widgets/top_bar.dart';
+
+class CreatePostScreen extends StatefulWidget {
+  const CreatePostScreen({super.key});
+
+  @override
+  State<CreatePostScreen> createState() => _CreatePostScreenState();
+}
+
+class _CreatePostScreenState extends State<CreatePostScreen> {
+  
+  CreatePostModel createPostModel = CreatePostModel.empty();
+
+  bool isFetching = false;
+
+  Map<String, String>? arguments; 
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    setState(() {      
+
+      arguments = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+      createPostModel.userId = arguments!["userId"] as String;
+      createPostModel.groupId = arguments!["groupId"] as String;
+
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Text("$post"),
+                TopBar(isRoot: false),
+                SectionHeader(name: "Create Post"),
+                const SizedBox(height: 40),
+                TextInput(
+                  hintText: "Title",
+                  value: createPostModel.title,
+                  onChanged: (value) {
+                    createPostModel.title = value;
+                  },
+                ),
+                const SizedBox(height: 40),
+                TextInput(
+                  hintText: "Description",
+                  value: createPostModel.description,
+                  onChanged: (value) {
+                    createPostModel.description = value;
+                  },
+                ),
+                const SizedBox(height: 40),
+                ImageInput(hintText: "Picture"),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    minimumSize: const Size(double.infinity, 0),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    backgroundColor: MyColors.primaryColor,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(isFetching ? "Posting..." : "Post to the group"),
+                  onPressed: (){
+                    setState(() {
+                      isFetching = true;
+                      print("Data : $createPostModel");
+                      PostService.createPost(createPostModel as CreatePostModel).then(
+                        (value){
+                          //Status code
+                          isFetching = false;
+                          Navigator.pushNamed(context, "/home");
+                        }
+                      );
+                      
+                    });
+                  }, 
+                ),
+                // BottomAction(
+                //   question: "Already a member?",
+                //   action: {"Login": Login()},
+                // )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

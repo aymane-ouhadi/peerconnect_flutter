@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:peerconnect_flutter/models/CreateEventModel.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/utils/constants.dart';
 
@@ -27,6 +28,33 @@ class EventService {
       return events;
     } else {
       throw Exception('Failed to load album');
+    }
+  }
+
+  static Future<int> createEvent(
+    CreateEventModel eventModel
+  ) async {
+    try{
+
+      eventModel.publishedAt = DateTime.now().toIso8601String();
+
+      final response = await http.post(
+        Uri.parse("${Constants.api}/posts/create"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(eventModel) 
+      );
+
+      print("status: ${response.statusCode}");
+
+      return response.statusCode;
+
+      // print("uri : ${Uri.parse("${Constants.api}/posts/details").replace(queryParameters: queryParams)}");
+
+
+    }
+    catch(e){
+      print("This is the error : $e");
+      return 500;
     }
   }
 

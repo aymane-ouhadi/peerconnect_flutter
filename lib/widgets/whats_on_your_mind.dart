@@ -4,13 +4,24 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 
 class WhatsOnYourMind extends StatelessWidget {
-  const WhatsOnYourMind({super.key});
+
+  final String userId;
+  final String groupId;
+
+  const WhatsOnYourMind({super.key, required this.userId, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, "/choice");
+        Navigator.pushNamed(
+          context, 
+          "/choice", 
+          arguments: {
+            "userId": userId,
+            "groupId": groupId 
+          }
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 20),

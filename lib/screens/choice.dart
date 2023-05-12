@@ -10,6 +10,10 @@ class ChoiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String userId = (ModalRoute.of(context)!.settings.arguments as Map)["userId"];
+    String groupId = (ModalRoute.of(context)!.settings.arguments as Map)["groupId"];
+
     return Scaffold(
       bottomNavigationBar: UIService.buildAppBar(),
       body: SafeArea(
@@ -24,13 +28,31 @@ class ChoiceScreen extends StatelessWidget {
                 image: "assets/images/create_post.png",
                 title: "Create a Post",
                 description: "Publish a Post in the group to let your friends know what you're up to",
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(
+                    context, 
+                    "/create_post",
+                    arguments: {
+                      "userId": userId,
+                      "groupId": groupId,
+                    }
+                  );
+                },
               ),
               ChoiceCard(
                 image: "assets/images/create_event.png",
                 title: "Create an Event",
                 description: "Gather your friends and live a great memory, set up an event and have a good time",
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(
+                    context, 
+                    "/create_event",
+                    arguments: {
+                      "userId": userId,
+                      "groupId": groupId,
+                    }
+                  );
+                },
               ),
             ],
           ),

@@ -4,10 +4,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:peerconnect_flutter/enumerations/RequestState.dart';
 import 'package:peerconnect_flutter/models/GroupDetailsModel.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/widgets/group_status_button.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
 import 'package:peerconnect_flutter/widgets/whats_on_your_mind.dart';
+import 'package:provider/provider.dart';
 
 class GroupScreen extends StatefulWidget {
 
@@ -56,6 +58,7 @@ class _GroupScreenState extends State<GroupScreen> with SingleTickerProviderStat
                       name: groupDetailsModel.group.name,
                       members: groupDetailsModel.members,
                       isMember: groupDetailsModel.isMember,
+                      groupDetailsModel: groupDetailsModel,
                       requestState: groupDetailsModel.requestState as String,
                     ),
                   ],
@@ -75,13 +78,14 @@ class PageInfo extends StatelessWidget {
   final List<User> members;
   final String requestState;
   final bool isMember;
+  final GroupDetailsModel groupDetailsModel;
 
   // final _tabs = [
   //   Tab(text: 'Tab1'),
   //   Tab(text: 'Tab2'),
   // ];
 
-  PageInfo({super.key, required this.name, required this.members, required this.isMember, required this.requestState});
+  PageInfo({super.key, required this.name, required this.members, required this.isMember, required this.requestState, required this.groupDetailsModel});
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +120,10 @@ class PageInfo extends StatelessWidget {
               )
             ],
           ),
-          WhatsOnYourMind()
+          WhatsOnYourMind(
+            userId: Provider.of<AuthProvider>(context, listen: false).user.id,
+            groupId: groupDetailsModel.group.id,
+          )
           // TabBar(tabs: _tabs)
         ],
       ),
