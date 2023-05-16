@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/RegisterModel.dart';
 import 'package:peerconnect_flutter/screens/login.dart';
+import 'package:peerconnect_flutter/services/AuthenticationService.dart';
 import 'package:peerconnect_flutter/widgets/auth_header.dart';
 import 'package:peerconnect_flutter/widgets/bottom_action.dart';
 import 'package:peerconnect_flutter/widgets/image_input.dart';
@@ -107,7 +108,11 @@ class _RegisterState extends State<Register> {
                 ),
                 child: const Text("Sign Up"),
                 onPressed: (){
-                  // print("Data : $registerModel");
+                  print("Data : $registerModel");
+                  AuthenticationService.register(registerModel).then((value) {
+                    print("register status: $value");
+                    Navigator.pushNamed(context, "/login");
+                  });
                 }, 
               ),
               BottomAction(

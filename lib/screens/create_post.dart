@@ -91,7 +91,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         (value){
                           //Status code
                           isFetching = false;
-                          Navigator.pushNamed(context, "/home");
+                          print("post status: $value");
+                          // Navigator.pushNamed(context, "/home");
                         }
                       );
                       

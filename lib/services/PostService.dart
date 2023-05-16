@@ -63,12 +63,12 @@ class PostService {
   ) async {
     try{
 
-      post.publishedAt = DateTime.now().toIso8601String();
+      // post.publishedAt = DateTime.now().toIso8601String();
 
       final response = await http.post(
         Uri.parse("${Constants.api}/posts/create"),
         headers: {"Content-Type": "application/json"},
-        body: json.encode(post) 
+        body: post.toJson() 
       );
 
       print("status: ${response.statusCode}");

@@ -18,4 +18,27 @@ class UIService {
     }
   }
 
+  static Future<void> showGroupDialog(
+    BuildContext context,
+    String title,
+    List<Widget> text,
+    List<Widget> actions, 
+  ) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: text,
+          ),
+        ),
+        actions: actions,
+      );
+    },
+  );
+}
+
 }

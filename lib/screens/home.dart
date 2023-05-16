@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
                       EmptyState(
                         image: "assets/images/emptystate_events.png",
                         title: "No events",
-                        description: "You're all caught up",
+                        description: "This is your chance to chill",
                       )   
                     :
                       EventCard(event: recentEvents[0])

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'dart:io';
+import 'package:peerconnect_flutter/models/RegisterModel.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/services/UserService.dart';
 import 'package:peerconnect_flutter/utils/constants.dart';
@@ -54,6 +55,19 @@ class AuthenticationService {
       return null;
     }
   }
+
+  static Future<String> register(
+    RegisterModel registerModel
+  ) async {
+    final response = await http.post(
+        Uri.parse("${Constants.api}/auth/register"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(registerModel) 
+      );
+      
+
+      return "${response}";
+  } 
 
   static Future<bool> isInternetConnected() async {
     try {

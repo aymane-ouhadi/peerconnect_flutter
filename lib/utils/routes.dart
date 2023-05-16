@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/screens/choice.dart';
 import 'package:peerconnect_flutter/screens/create_event.dart';
+import 'package:peerconnect_flutter/screens/create_group.dart';
 import 'package:peerconnect_flutter/screens/create_post.dart';
 import 'package:peerconnect_flutter/screens/group.dart';
 import 'package:peerconnect_flutter/screens/groups.dart';
@@ -28,5 +29,6 @@ class Routes {
     "/choice": (BuildContext context) => const ChoiceScreen(),
     "/create_post": (BuildContext context) => const CreatePostScreen(),
     "/create_event": (BuildContext context) => const CreateEventScreen(),
+    "/create_group": (BuildContext context) => const CreateGroupScreen(),
   }; 
 }

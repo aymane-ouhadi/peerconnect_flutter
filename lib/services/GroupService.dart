@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:peerconnect_flutter/models/CreateGroupModel.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/models/GroupDetailsModel.dart';
 import 'package:peerconnect_flutter/models/GroupSearchModel.dart';
@@ -57,7 +58,6 @@ class GroupService {
       final Map<String, dynamic> jsonResponse = json.decode(response.body);
       final GroupDetailsModel group = GroupDetailsModel.fromJson(jsonResponse);
 
-      print("The group : $group");
       
       return group;
 
@@ -71,6 +71,84 @@ class GroupService {
       // throw Exception('Failed to load album');
       return GroupDetailsModel.empty();
     }
+  }
+
+  static Future<int> createGroup(
+    CreateGroupModel createGroupModel
+  ) async {
+    try{
+
+      final response = await http.post(
+        Uri.parse("${Constants.api}/groups/create"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(createGroupModel.toJson()) 
+      );
+
+      print("status: ${response.statusCode}");
+
+      return response.statusCode;
+
+      // print("uri : ${Uri.parse("${Constants.api}/posts/details").replace(queryParameters: queryParams)}");
+
+
+    }
+    catch(e){
+      print("This is the error : $e");
+      return 500;
+    }
+  }
+
+  Future<int> ban(
+    String userId,
+    String groupId,
+  ) async {
+
+    final queryParams = {
+      'userId': userId,
+      'groupId': groupId,
+    };
+
+    try{
+      final response = await http.put(
+        Uri.parse("${Constants.api}/groups/ban").replace(queryParameters: queryParams),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      return response.statusCode;
+    }
+    catch(e){
+      print("This is the error : $e.");
+      return 500;
+    }
+  }
+
+  Future<int> join(
+    String userId,
+    String groupId,
+  ) async {
+
+    final queryParams = {
+      'userId': userId,
+      'groupId': groupId,
+    };
+
+    try{
+      final response = await http.post(
+        Uri.parse("${Constants.api}/groups/join").replace(queryParameters: queryParams),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      return response.statusCode;
+    }
+    catch(e){
+      print("This is the error : $e.");
+      return 500;
+    }
+
   }
 
 }

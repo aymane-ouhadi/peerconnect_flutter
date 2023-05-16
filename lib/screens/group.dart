@@ -6,7 +6,11 @@ import 'package:peerconnect_flutter/models/GroupDetailsModel.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
+import 'package:peerconnect_flutter/widgets/empty_state.dart';
+import 'package:peerconnect_flutter/widgets/event_card.dart';
 import 'package:peerconnect_flutter/widgets/group_status_button.dart';
+import 'package:peerconnect_flutter/widgets/post_card.dart';
+import 'package:peerconnect_flutter/widgets/section_header.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
 import 'package:peerconnect_flutter/widgets/whats_on_your_mind.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +63,7 @@ class _GroupScreenState extends State<GroupScreen> with SingleTickerProviderStat
                       members: groupDetailsModel.members,
                       isMember: groupDetailsModel.isMember,
                       groupDetailsModel: groupDetailsModel,
-                      requestState: groupDetailsModel.requestState as String,
+                      requestState: groupDetailsModel.requestState,
                     ),
                   ],
                 ),
@@ -76,7 +80,7 @@ class PageInfo extends StatelessWidget {
 
   final String name;
   final List<User> members;
-  final String requestState;
+  String? requestState;
   final bool isMember;
   final GroupDetailsModel groupDetailsModel;
 
@@ -89,6 +93,9 @@ class PageInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    print("request state : $requestState");
+
     return Container(
       margin: EdgeInsets.only(top: 30),
       width: double.infinity,
@@ -123,7 +130,50 @@ class PageInfo extends StatelessWidget {
           WhatsOnYourMind(
             userId: Provider.of<AuthProvider>(context, listen: false).user.id,
             groupId: groupDetailsModel.group.id,
-          )
+          ),
+          groupDetailsModel.requestState != "ACCEPTED" 
+          ?
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 40),
+                child: EmptyState(
+                  image: "assets/images/not_member.png",
+                  title: "You're not a member",
+                  description: "Send a join request if you want to explore the group",
+                ),
+              ),
+            )
+          :
+            Column(
+              children: [
+                SectionHeader(
+                  name: "Events",
+                  action: {
+                    "/events": groupDetailsModel.events
+                  }
+                ),
+                SizedBox(height: 30,),
+                ...groupDetailsModel.events.map((event) => Column(
+                  children: [
+                    EventCard(event: event),
+                    SizedBox(height: 40,)
+                  ],
+                )).toList().take(2),
+                SectionHeader(
+                  name: "Posts",
+                  action: {
+                    "/posts": groupDetailsModel.posts
+                  }
+                ),
+                SizedBox(height: 30,),
+                ...groupDetailsModel.posts.map((post) => Column(
+                  children: [
+                    PostCard(post: post),
+                    SizedBox(height: 40,)
+                  ],
+                )).toList().take(2),
+              ],
+            )
           // TabBar(tabs: _tabs)
         ],
       ),

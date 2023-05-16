@@ -12,10 +12,12 @@ import 'package:peerconnect_flutter/utils/my_colors.dart';
 class DateInput extends StatefulWidget {
 
   final String hintText;
+  final Function onTap;
 
   const DateInput({
     Key? key,
-    required this.hintText
+    required this.hintText,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -38,22 +40,22 @@ class _DateInputState extends State<DateInput> {
                     context: context,
                     initialDate: DateTime.now(), //get today's date
                     firstDate: DateTime.now(), //DateTime.now() - not to allow to choose before today.
-                    lastDate: DateTime(2101)
+                    lastDate: DateTime(3000)
                 );
-
                 
-                    if(pickedDate != null ){
-                        String formattedDate = ComfortService.formatDate(pickedDate.toIso8601String()); 
+                if(pickedDate != null ){
+                    String formattedDate = ComfortService.formatDate(pickedDate.toIso8601String()); 
 
-                        setState(() {
-                          
-                          _controller.text = formattedDate; //set foratted date to TextField value. 
-                        });
-                    }else{
-                        print("Date is not selected");
-                    }
+                    setState(() {
+                      _controller.text = formattedDate; //set foratted date to TextField value. 
+                    });
+                }
+                else{
+                    print("Date is not selected");
+                }
 
-                // myAlert();
+                widget.onTap(pickedDate!.toIso8601String());
+
               },
               child: TextField(
                 readOnly: true,

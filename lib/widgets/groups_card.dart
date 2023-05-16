@@ -43,24 +43,27 @@ class GroupsCard extends StatelessWidget {
               width: double.infinity,
               child: Wrap(
                 children: groups.take(6).map((group){
-                  return Column(
-                    children: [
-                      Container(
-                        width: 85,
-                        height: 85,
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(1000)
+                  return Container(
+                    margin: EdgeInsets.only(right: 30),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 85,
+                          height: 85,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(1000)
+                          ),
+                          child: Image.asset(
+                            "assets/images/barbecue.png", 
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                          ),
                         ),
-                        child: Image.asset(
-                          "assets/images/barbecue.png", 
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      Text(UIService.substring(group.name, 10), style: TextStyle(fontWeight: FontWeight.bold),)
-                    ],
+                        SizedBox(height: 20,),
+                        Text(UIService.substring(group.name, 10), style: TextStyle(fontWeight: FontWeight.bold),)
+                      ],
+                    ),
                   );
                 }).toList(),
               ),

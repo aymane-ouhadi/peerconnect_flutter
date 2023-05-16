@@ -1,5 +1,5 @@
 class CreatePostModel {
-  String publishedAt;
+  // String publishedAt;
   String userId;
   String groupId;
   String title;
@@ -7,7 +7,7 @@ class CreatePostModel {
   String description;
 
   CreatePostModel({
-    required this.publishedAt,
+    // required this.publishedAt,
     required this.userId,
     required this.groupId,
     required this.title,
@@ -17,7 +17,7 @@ class CreatePostModel {
 
   factory CreatePostModel.empty() {
     return CreatePostModel(
-      publishedAt: DateTime.now().toIso8601String(),
+      // publishedAt: DateTime.now().toIso8601String(),
       userId: '',
       groupId: '',
       title: '',
@@ -36,4 +36,15 @@ class CreatePostModel {
         'description: $description'
         '}';
   }
+
+  Map<String, dynamic> toJson() {
+  return {
+    // '_publishedAt': publishedAt,
+    'userId': userId,
+    'groupId': groupId,
+    'title': title,
+    'picture': picture,
+    'description': description,
+  };
+}
 }

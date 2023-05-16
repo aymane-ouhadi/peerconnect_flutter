@@ -36,10 +36,8 @@ class EventService {
   ) async {
     try{
 
-      eventModel.publishedAt = DateTime.now().toIso8601String();
-
       final response = await http.post(
-        Uri.parse("${Constants.api}/posts/create"),
+        Uri.parse("${Constants.api}/events/create"),
         headers: {"Content-Type": "application/json"},
         body: json.encode(eventModel) 
       );

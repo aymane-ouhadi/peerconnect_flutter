@@ -35,7 +35,12 @@ class Groups extends StatelessWidget {
                       children: [
                         Icon(Icons.add_circle_outline, color: MyColors.primaryColor, size: 20,),
                         SizedBox(width: 7,),
-                        Text("Create a Group", style: TextStyle(color: MyColors.primaryColor),),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, "/create_group");
+                          },
+                          child: Text("Create a Group", style: TextStyle(color: MyColors.primaryColor),)
+                        ),
                       ],
                     ),
                   )
