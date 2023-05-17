@@ -59,7 +59,7 @@ class PostService {
   }
 
   static Future<int> createPost(
-    CreatePostModel post
+    CreatePostModel createPostModel
   ) async {
     try{
 
@@ -68,7 +68,7 @@ class PostService {
       final response = await http.post(
         Uri.parse("${Constants.api}/posts/create"),
         headers: {"Content-Type": "application/json"},
-        body: post.toJson() 
+        body: jsonEncode(createPostModel)
       );
 
       print("status: ${response.statusCode}");

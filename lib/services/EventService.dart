@@ -39,7 +39,7 @@ class EventService {
       final response = await http.post(
         Uri.parse("${Constants.api}/events/create"),
         headers: {"Content-Type": "application/json"},
-        body: json.encode(eventModel) 
+        body: jsonEncode(eventModel) 
       );
 
       print("status: ${response.statusCode}");

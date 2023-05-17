@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:peerconnect_flutter/enumerations/RequestState.dart';
 import 'package:peerconnect_flutter/models/GroupDetailsModel.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
+import 'package:peerconnect_flutter/widgets/about_group_sheet.dart';
 import 'package:peerconnect_flutter/widgets/empty_state.dart';
 import 'package:peerconnect_flutter/widgets/event_card.dart';
 import 'package:peerconnect_flutter/widgets/group_status_button.dart';
@@ -120,17 +118,55 @@ class PageInfo extends StatelessWidget {
             ),
           SizedBox(height: 20,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GroupStatusButton(
                 requestState: requestState,
+                groupId: groupDetailsModel.group.id,
+                userId: Provider.of<AuthProvider>(context, listen: false).user.id,
+              ),
+              SizedBox(width: 30,),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[200],
+                  foregroundColor: Colors.grey[800],
+                  elevation: 3
+                ),
+                onPressed: (){
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(  
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15),
+                      ),
+                    ),
+                    builder: (BuildContext context) {
+                      return AboutGroupSheet(
+                        group: groupDetailsModel.group,
+                        members: groupDetailsModel.members,
+                      );
+                    },
+                  );
+                }, 
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline),
+                    SizedBox(width: 10,),
+                    Text("About")
+                  ],
+                ),
               )
             ],
           ),
-          WhatsOnYourMind(
-            userId: Provider.of<AuthProvider>(context, listen: false).user.id,
-            groupId: groupDetailsModel.group.id,
-          ),
+          groupDetailsModel.requestState == "ACCEPTED" 
+          ?
+            WhatsOnYourMind(
+              userId: Provider.of<AuthProvider>(context, listen: false).user.id,
+              groupId: groupDetailsModel.group.id,
+            )
+          :
+            SizedBox(),
           groupDetailsModel.requestState != "ACCEPTED" 
           ?
             Center(

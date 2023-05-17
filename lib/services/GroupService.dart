@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:peerconnect_flutter/models/CreateGroupModel.dart';
-import 'package:peerconnect_flutter/models/Event.dart';
+import 'package:peerconnect_flutter/models/CreateGroupModel.dart'; 
 import 'package:peerconnect_flutter/models/GroupDetailsModel.dart';
 import 'package:peerconnect_flutter/models/GroupSearchModel.dart';
 import 'package:peerconnect_flutter/utils/constants.dart';
@@ -81,7 +80,7 @@ class GroupService {
       final response = await http.post(
         Uri.parse("${Constants.api}/groups/create"),
         headers: {"Content-Type": "application/json"},
-        body: json.encode(createGroupModel.toJson()) 
+        body: jsonEncode(createGroupModel) 
       );
 
       print("status: ${response.statusCode}");
@@ -98,7 +97,7 @@ class GroupService {
     }
   }
 
-  Future<int> ban(
+  static Future<int> ban(
     String userId,
     String groupId,
   ) async {
@@ -124,7 +123,7 @@ class GroupService {
     }
   }
 
-  Future<int> join(
+  static Future<int> join(
     String userId,
     String groupId,
   ) async {
