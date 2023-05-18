@@ -32,9 +32,18 @@ class CreateEventModel {
         'userId: $userId, '
         'groupId: $groupId, '
         'title: $title, '
-        'picture: $picture, '
+        'picture: ||$picture, ||'
         'description: $description, '
         'eventDate: $eventDate'
         '}';
   }
+
+  Map<String, dynamic> toJson() => {
+        'userId': userId,
+        'groupId': groupId,
+        'title': title,
+        'picture': "",
+        'description': description,
+        'eventDate': eventDate,
+      };
 }

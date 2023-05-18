@@ -42,9 +42,11 @@ class GroupsCard extends StatelessWidget {
             Container(
               width: double.infinity,
               child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                runSpacing: 30,
                 children: groups.take(6).map((group){
                   return Container(
-                    margin: EdgeInsets.only(right: 30),
+                    // margin: EdgeInsets.only(right: 20, bottom: 20, top: 20),
                     child: Column(
                       children: [
                         Container(

@@ -28,7 +28,7 @@ class SectionHeader extends StatelessWidget {
               fontWeight: FontWeight.bold
             ),
           ),
-          action != null 
+          (action != null && (action!.values.first as List).length > 0)
           ?
             GestureDetector(
               onTap: (){

@@ -93,17 +93,17 @@ class _CreatePostScreenState extends State<CreateEventScreen> {
                   onPressed: (){
                     setState(() {
                       isFetching = true;
-                      print("Data : $createEventModel");
-                      EventService.createEvent(createEventModel).then(
-                        (value){
-                          //Status code
-                          isFetching = false;
-                          print("status : $value");
-                          // Navigator.pushNamed(context, "/home");
-                        }
-                      );
-                      
                     });
+                    EventService.createEvent(createEventModel).then(
+                      (value){
+                        //Status code
+                        setState(() {
+                          isFetching = false;
+                        });
+                        print(" create event status : $value");
+                        Navigator.pushNamed(context, "/home");
+                      }
+                    );
                   }, 
                 ),
                 // BottomAction(

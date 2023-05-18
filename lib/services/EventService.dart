@@ -35,11 +35,12 @@ class EventService {
     CreateEventModel eventModel
   ) async {
     try{
+      print("eventModel: ${eventModel}");
 
       final response = await http.post(
         Uri.parse("${Constants.api}/events/create"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(eventModel) 
+        body: jsonEncode(eventModel)
       );
 
       print("status: ${response.statusCode}");

@@ -189,12 +189,24 @@ class PageInfo extends StatelessWidget {
                   }
                 ),
                 SizedBox(height: 30,),
-                ...groupDetailsModel.events.map((event) => Column(
-                  children: [
-                    EventCard(event: event),
-                    SizedBox(height: 40,)
-                  ],
-                )).toList().take(2),
+                groupDetailsModel.events.length <= 0
+                ?
+                  EmptyState(
+                    image: "assets/images/emptystate_events.png",
+                    title: "No events",
+                    description: "This is your chance to chill",
+                  ) 
+                :
+                  Column(
+                    children: [
+                      ...groupDetailsModel.events.map((event) => Column(
+                        children: [
+                          EventCard(event: event),
+                          SizedBox(height: 40,)
+                        ],
+                      )).toList().take(2),
+                    ],
+                  ),
                 SectionHeader(
                   name: "Posts",
                   action: {
@@ -202,12 +214,24 @@ class PageInfo extends StatelessWidget {
                   }
                 ),
                 SizedBox(height: 30,),
-                ...groupDetailsModel.posts.map((post) => Column(
-                  children: [
-                    PostCard(post: post),
-                    SizedBox(height: 40,)
-                  ],
-                )).toList().take(2),
+                groupDetailsModel.posts.length <= 0
+                ?
+                  EmptyState(
+                    image: "assets/images/emptystate_news.png",
+                    title: "No posts",
+                    description: "You're all caught up",
+                  ) 
+                :
+                  Column(
+                    children: [
+                      ...groupDetailsModel.posts.map((post) => Column(
+                        children: [
+                          PostCard(post: post),
+                          SizedBox(height: 40,)
+                        ],
+                      )).toList().take(2),
+                    ],
+                  ),
               ],
             )
           // TabBar(tabs: _tabs)

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/CreateGroupModel.dart';
-import 'package:peerconnect_flutter/models/CreateGroupModel.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
-import 'package:peerconnect_flutter/services/EventService.dart';
 import 'package:peerconnect_flutter/services/GroupService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/date_input.dart';
