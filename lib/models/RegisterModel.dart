@@ -37,4 +37,18 @@ class RegisterModel {
   String toString() {
     return 'RegisterModel{firstName: $firstName, lastName: $lastName, email: $email, college: $college, major: $major, password: $password, confirmPassword: $confirmPassword, profilePicture: $profilePicture, coverPicture: $coverPicture}';
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "college": college,
+      "major": major,
+      "password": password,
+      "confirmPassword": confirmPassword,
+      "profilePicture": profilePicture,
+      "coverPicture": coverPicture
+    };
+  }
 }

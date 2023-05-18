@@ -59,14 +59,19 @@ class AuthenticationService {
   static Future<String> register(
     RegisterModel registerModel
   ) async {
-    final response = await http.post(
+    try {
+      final response = await http.post(
         Uri.parse("${Constants.api}/auth/register"),
         headers: {"Content-Type": "application/json"},
-        body: json.encode(registerModel) 
+        body: jsonEncode(registerModel) 
       );
       
 
-      return "${response}";
+      return "auth res : ${response.statusCode}";
+    } catch (e) {
+      print("error : $e");
+      return e.toString();
+    }
   } 
 
   static Future<bool> isInternetConnected() async {

@@ -22,6 +22,8 @@ class _RegisterState extends State<Register> {
 
   RegisterModel registerModel = RegisterModel.empty();
 
+  bool isFetching = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,10 +108,16 @@ class _RegisterState extends State<Register> {
                   backgroundColor: MyColors.primaryColor,
                   foregroundColor: Colors.white,
                 ),
-                child: const Text("Sign Up"),
+                child: Text(isFetching ? "Processing..." : "Sign Up"),
                 onPressed: (){
+                  setState(() {
+                    isFetching = true;
+                  });
                   print("Data : $registerModel");
                   AuthenticationService.register(registerModel).then((value) {
+                    setState(() {
+                      isFetching = false;
+                    });
                     print("register status: $value");
                     Navigator.pushNamed(context, "/login");
                   });
