@@ -86,17 +86,18 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   onPressed: (){
                     setState(() {
                       isFetching = true;
+                    });
                       print("Data : $createPostModel");
                       PostService.createPost(createPostModel as CreatePostModel).then(
                         (value){
                           //Status code
-                          isFetching = false;
+                          setState(() {
+                            isFetching = false;                            
+                          });
                           print("post status: $value");
-                          // Navigator.pushNamed(context, "/home");
+                          Navigator.pushNamed(context, "/home");
                         }
                       );
-                      
-                    });
                   }, 
                 ),
                 // BottomAction(

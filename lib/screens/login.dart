@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:peerconnect_flutter/models/LoginModel.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
@@ -71,9 +72,20 @@ class _LoginState extends State<Login> {
                       // print("Email : ${loginModel.email}");
                       // print("Password : ${loginModel.password}");
                       User? user = await AuthenticationService.fetchUser(loginModel.email, loginModel.password);
-                      provider.user = user ?? User.empty();
+                      if(user?.id == null){
+                        Fluttertoast.showToast(
+                          msg: "Email/Password is wrong",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          backgroundColor: MyColors.toastColor,
+                          timeInSecForIosWeb: 1,
+                        );
+                      }
+                      else{
+                        provider.user = user ?? User.empty();
+                        Navigator.pushNamed(context, "/home");
+                      }
                       
-                      Navigator.pushNamed(context, "/home");
                     }, 
                   ),
                   BottomAction(

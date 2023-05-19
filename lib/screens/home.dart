@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
 
   List<Event> recentEvents = List.empty();
   List<Post> recentPosts = List.empty();
+  bool isFetching = true;
 
   @override
   void didChangeDependencies() {
@@ -36,6 +37,7 @@ class _HomeState extends State<Home> {
       EventService.fetchRecentEvents(provider.user.id).then(
         (value) {
           setState(() {
+            isFetching = false;
             recentEvents = value;
           });
         }
@@ -43,6 +45,7 @@ class _HomeState extends State<Home> {
       PostService.fetchRecentPosts(provider.user.id).then(
         (value) {
           setState(() {
+            isFetching = false;
             recentPosts = value;
           });
         }
@@ -72,33 +75,45 @@ class _HomeState extends State<Home> {
                         "/events": recentEvents
                       }
                     ),
-                    recentEvents.length <= 0 
-                    ? 
-                      EmptyState(
-                        image: "assets/images/emptystate_events.png",
-                        title: "No events",
-                        description: "This is your chance to chill",
-                      )   
+                    isFetching
+                    ?
+                      CircularProgressIndicator(
+                        value: null,
+                      )
                     :
-                      EventCard(event: recentEvents[0])
-                    ,
+                      recentEvents.length <= 0 
+                      ? 
+                        EmptyState(
+                          image: "assets/images/emptystate_events.png",
+                          title: "No events",
+                          description: "This is your chance to chill",
+                        )   
+                      :
+                        EventCard(event: recentEvents[0])
+                      ,
                     SectionHeader(
                       name: "Posts",
                       action: {
                         "/posts": recentPosts
                       }
                     ),
-                    recentPosts.length <= 0 
-                    ? 
-                      EmptyState(
-                        image: "assets/images/emptystate_news.png",
-                        title: "No posts",
-                        description: "You're all caught up",
-                      )   
+                    isFetching
+                    ?
+                     CircularProgressIndicator(
+                        value: null,
+                      )
                     :
-                      PostCard(post: recentPosts[0])
-                    ,
-                    SizedBox(height: 50,)
+                      recentPosts.length <= 0 
+                      ? 
+                        EmptyState(
+                          image: "assets/images/emptystate_news.png",
+                          title: "No posts",
+                          description: "You're all caught up",
+                        )   
+                      :
+                        PostCard(post: recentPosts[0])
+                      ,
+                      SizedBox(height: 50,)
                   ],
                 ),
               );

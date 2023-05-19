@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:peerconnect_flutter/models/RegisterModel.dart';
 import 'package:peerconnect_flutter/screens/login.dart';
 import 'package:peerconnect_flutter/services/AuthenticationService.dart';
@@ -118,8 +119,20 @@ class _RegisterState extends State<Register> {
                     setState(() {
                       isFetching = false;
                     });
-                    print("register status: $value");
-                    Navigator.pushNamed(context, "/login");
+                    if(value.statusCode < 400){
+                      print("register status: $value");
+                      Navigator.pushNamed(context, "/login");
+                    }
+                    else{
+                      Fluttertoast.showToast(
+                        msg: value.body,
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: MyColors.toastColor,
+                        timeInSecForIosWeb: 1,
+                      );
+
+                    }
                   });
                 }, 
               ),

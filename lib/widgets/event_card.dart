@@ -155,7 +155,7 @@ class EventCenter extends StatelessWidget {
                   ),
                   attendees.length <= 1
                   ?
-                    "Be the first one to attend this event"
+                    "Be one of first to attend this event"
                   :
 
                     "${attendees.length} people are going to the event"

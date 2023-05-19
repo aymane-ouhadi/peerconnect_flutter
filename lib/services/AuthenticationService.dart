@@ -56,7 +56,7 @@ class AuthenticationService {
     }
   }
 
-  static Future<String> register(
+  static Future<http.Response> register(
     RegisterModel registerModel
   ) async {
     try {
@@ -67,10 +67,13 @@ class AuthenticationService {
       );
       
 
-      return "auth res : ${response.statusCode}";
+      return response;
     } catch (e) {
       print("error : $e");
-      return e.toString();
+      return http.Response(
+        e.toString(), 
+        500
+      );
     }
   } 
 

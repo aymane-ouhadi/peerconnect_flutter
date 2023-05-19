@@ -42,9 +42,16 @@ class SearchGroupCard extends StatelessWidget {
               child: Row(
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
-                    child: Placeholder(),
+                    width: 60,
+                    height: 60,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1000)
+                    ),
+                    child: Image.asset(
+                      "assets/images/barbecue.png",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   SizedBox(width: 15),
                   Column(
