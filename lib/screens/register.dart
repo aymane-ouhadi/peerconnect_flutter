@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peerconnect_flutter/models/RegisterModel.dart';
 import 'package:peerconnect_flutter/screens/login.dart';
 import 'package:peerconnect_flutter/services/AuthenticationService.dart';
+import 'package:peerconnect_flutter/services/ComfortService.dart';
+import 'package:peerconnect_flutter/utils/constants.dart';
 import 'package:peerconnect_flutter/widgets/auth_header.dart';
 import 'package:peerconnect_flutter/widgets/bottom_action.dart';
 import 'package:peerconnect_flutter/widgets/image_input.dart';
@@ -24,6 +27,10 @@ class _RegisterState extends State<Register> {
   RegisterModel registerModel = RegisterModel.empty();
 
   bool isFetching = false;
+
+  XFile? profile;
+
+  XFile? cover;
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +87,20 @@ class _RegisterState extends State<Register> {
                 },
               ),
               const SizedBox(height: 40),
-              ImageInput(hintText: "Profile Picture"),
+              ImageInput(
+                hintText: "Profile Picture", 
+                onChanged: (XFile file){  
+                  profile = file;
+                  print("profile : ${profile?.name}");
+                },),
               const SizedBox(height: 40),
-              ImageInput(hintText: "Cover Picture"),
+              ImageInput(
+                hintText: "Cover Picture",
+                onChanged: (XFile? file){
+                  cover = file;
+                  print("cover : ${cover?.name}");
+                },
+              ),
               const SizedBox(height: 40),
               PasswordInput(
                 hintText: "Password",
@@ -110,11 +128,31 @@ class _RegisterState extends State<Register> {
                   foregroundColor: Colors.white,
                 ),
                 child: Text(isFetching ? "Processing..." : "Sign Up"),
-                onPressed: (){
+                onPressed: () async {
+
+                  //Alerting the user that signing up is being done
                   setState(() {
                     isFetching = true;
                   });
-                  print("Data : $registerModel");
+
+                  //Saving the profile picture
+                  String profilePath = await ComfortService.saveFile(
+                    profile,
+                    Constants.uploadedProfilesBase
+                  );
+
+                  //Saving the cover picture
+                  String coverPath = await ComfortService.saveFile(
+                    cover,
+                    Constants.uploadedCoversBase
+                  );
+
+                  setState(() {
+                    registerModel.profilePicture = profilePath;
+                    registerModel.coverPicture = coverPath;
+                  });
+
+                  print("Data : ${registerModel}");
                   AuthenticationService.register(registerModel).then((value) {
                     setState(() {
                       isFetching = false;
@@ -134,6 +172,7 @@ class _RegisterState extends State<Register> {
 
                     }
                   });
+
                 }, 
               ),
               BottomAction(

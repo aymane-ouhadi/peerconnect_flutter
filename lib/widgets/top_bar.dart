@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/widgets/bottom_sheet.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:provider/provider.dart';
+
+import 'dart:io';
 
 class TopBar extends StatefulWidget {
 
@@ -21,10 +22,14 @@ class TopBar extends StatefulWidget {
 
 class _TopBarState extends State<TopBar> {
 
+  User user = User.empty();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-      AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
+    AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
+    user = provider.user;
+    print("user : $user");
   }
 
   @override
@@ -70,8 +75,17 @@ class _TopBarState extends State<TopBar> {
             },
             child: Container(
               width: 50,
-              height: 60,
-              child: Image.asset("assets/images/avatar.png")
+              height: 50,
+              child: 
+                // user.profilePicture == ""
+                // ?
+                //   Image(
+                //     image: FileImage(File(user.coverPicture as String)),
+                //     fit: BoxFit.cover,
+                //   )
+                // :
+                //   Image.asset("assets/images/avatar.png")
+                Image.asset("assets/images/avatar.png", fit: BoxFit.cover,)
             ),
           )
         ],

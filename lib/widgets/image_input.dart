@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:path/path.dart' as p;
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 
@@ -12,9 +11,12 @@ class ImageInput extends StatefulWidget {
 
   final String hintText;
 
+  final Function(XFile file) onChanged;
+
   const ImageInput({
     Key? key,
-    required this.hintText
+    required this.hintText, 
+    required this.onChanged
   }) : super(key: key);
 
   @override
@@ -38,6 +40,8 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       image = img;
     });
+
+    widget.onChanged(img as XFile);
   }
 
   //show popup dialog
@@ -120,10 +124,14 @@ class _ImageInputState extends State<ImageInput> {
                           isVisible = !isVisible;
                         });
                       },
-                      child: Text(
-                        "Show", 
-                        style: TextStyle(fontSize: 12),
-                      )
+                      child: Icon(
+                        isVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                        color: Colors.grey[600],
+                      ),
+                      // child: Text(
+                      //   "Show", 
+                      //   style: TextStyle(fontSize: 12),
+                      // )
                     ),
                     const SizedBox(width: 70),
                     GestureDetector(
@@ -131,7 +139,6 @@ class _ImageInputState extends State<ImageInput> {
                         setState(() {
                           image = null;
                           isVisible = false;
-                          // print("Cancel");
                         });
                       },
                       child: Text(

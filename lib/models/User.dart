@@ -61,12 +61,14 @@ class User {
       college: '',
       major: '',
       password: '',
+      profilePicture: '',
+      coverPicture: '',
     );
   }
 
   @override
   String toString() {
-    return 'User{id: $id, firstName: $firstName, lastName: $lastName}';
+    return 'User{id: $id, firstName: $firstName, lastName: $lastName}, profilePicture: ${profilePicture}';
   }
   
 }

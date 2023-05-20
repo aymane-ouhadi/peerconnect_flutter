@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peerconnect_flutter/models/CreatePostModel.dart';
 import 'package:peerconnect_flutter/services/PostService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
@@ -71,7 +72,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   },
                 ),
                 const SizedBox(height: 40),
-                ImageInput(hintText: "Picture"),
+                ImageInput(
+                  hintText: "Picture",
+                  onChanged: (XFile? file) {
+
+                  },
+                ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

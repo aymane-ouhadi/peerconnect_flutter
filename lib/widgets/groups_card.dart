@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:peerconnect_flutter/models/group.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:peerconnect_flutter/widgets/empty_state.dart';
 
 class GroupsCard extends StatelessWidget {
 
@@ -34,41 +35,53 @@ class GroupsCard extends StatelessWidget {
                         arguments: groups
                       );
                     },
-                    child: Text("See More", style: TextStyle(color: MyColors.primaryColor),),
+                    child: Text("See More", style: TextStyle(color: MyColors.primaryColor)),
                   )
                 ],
               ),
             ),
             Container(
               width: double.infinity,
-              child: Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                runSpacing: 30,
-                children: groups.take(6).map((group){
-                  return Container(
-                    // margin: EdgeInsets.only(right: 20, bottom: 20, top: 20),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 85,
-                          height: 85,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(1000)
+              child:
+              groups.length <= 0 
+              ?
+                Container(
+                  padding: EdgeInsets.only(bottom: 25),
+                  child: EmptyState(
+                    image: "assets/images/empty_state_my_groups.png",
+                    title: "No groups",
+                    description: "Don't be shy, explore our world",
+                  ),
+                )
+              :
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  runSpacing: 30,
+                  children: groups.take(6).map((group){
+                    return Container(
+                      // margin: EdgeInsets.only(right: 20, bottom: 20, top: 20),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 85,
+                            height: 85,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(1000)
+                            ),
+                            child: Image.asset(
+                              "assets/images/barbecue.png", 
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
                           ),
-                          child: Image.asset(
-                            "assets/images/barbecue.png", 
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
-                        ),
-                        SizedBox(height: 20,),
-                        Text(UIService.substring(group.name, 10), style: TextStyle(fontWeight: FontWeight.bold),)
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
+                          SizedBox(height: 20,),
+                          Text(UIService.substring(group.name, 10), style: TextStyle(fontWeight: FontWeight.bold),)
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
             ),
           ],
         ),

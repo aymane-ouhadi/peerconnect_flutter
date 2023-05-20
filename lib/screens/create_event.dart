@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peerconnect_flutter/models/CreateEventModel.dart';
 import 'package:peerconnect_flutter/services/EventService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
@@ -69,7 +70,12 @@ class _CreatePostScreenState extends State<CreateEventScreen> {
                 ),
                 
                 const SizedBox(height: 40),
-                ImageInput(hintText: "Picture"),
+                ImageInput(
+                  hintText: "Picture",
+                  onChanged: (XFile? file){
+                    
+                  },
+                ),
                 const SizedBox(height: 40),
                 DateInput(
                   hintText: "Pick a date, any date",

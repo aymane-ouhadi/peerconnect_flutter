@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Group.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:peerconnect_flutter/models/UserProfileModel.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/widgets/groups_card.dart';
@@ -17,6 +20,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
 
   UserProfileModel userProfileModel = UserProfileModel.empty();
+
 
   @override
   void didChangeDependencies() {
@@ -40,7 +44,22 @@ class _ProfileState extends State<Profile> {
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: TopBar(isRoot: true),
               ),
-              Container(width: double.infinity, height: 200, child: Placeholder()),
+              Container(
+                width: double.infinity, 
+                height: 200, 
+                child: 
+                userProfileModel.user.coverPicture == null
+                ?
+                  Image.asset(
+                    "assets/images/default_cover_1.jpg",
+                    fit: BoxFit.cover,
+                  )
+                :
+                  Image(
+                    image: FileImage(File(userProfileModel.user.coverPicture ?? "")),
+                    fit: BoxFit.cover,
+                  )
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Column(

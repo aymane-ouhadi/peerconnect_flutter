@@ -13,6 +13,14 @@ class Constants {
 
 
   static String api = "https://peerconnect-backend.onrender.com";
+
+  static String uploadedCoversBase = "assets/uploads/covers";
+
+  static String uploadedEventsBase = "assets/uploads/events";
+
+  static String uploadedPostsBase = "assets/uploads/posts";
+
+  static String uploadedProfilesBase = "assets/uploads/profiles";
   
   static Map<String, Map<String, IconBuilder>> routes = {
     "/home": {
@@ -49,7 +57,7 @@ class Constants {
     },
   };
 
-static List<Map<String, dynamic>> bottomSheetOptions = [
+  static List<Map<String, dynamic>> bottomSheetOptions = [
     {
       "icon": const Icon(Icons.person_outline, color: Colors.black),
       "title": "Visit your profile",

@@ -3,6 +3,11 @@
 
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
 
 class ComfortService {
 
@@ -43,4 +48,60 @@ class ComfortService {
     return timeago.format(now.subtract(difference));
   }
 
+  static Future<String> saveFile(XFile? xfile, String destinationPath) async {
+    try {
+      if (xfile == null) {
+        throw Exception('Invalid XFile provided.');
+      }
+
+      final originalName = path.basename(xfile.path);
+      final fileName = '${DateTime.now().millisecondsSinceEpoch}_$originalName';
+
+      final appDir = await getApplicationDocumentsDirectory();
+      final savedDir = Directory('${appDir.path}/$destinationPath');
+      if (!savedDir.existsSync()) {
+        savedDir.createSync(recursive: true);
+      }
+
+      final savedFilePath = '${savedDir.path}/$fileName';
+
+      final byteData = await xfile.readAsBytes();
+      await File(savedFilePath).writeAsBytes(byteData.buffer.asUint8List());
+
+      return savedFilePath;
+    } catch (e) {
+      print('Failed to save XFile: $e');
+      return '';
+    }
+  }
+
+  // static Future<String> saveFile(XFile? xfile, String destinationPath) async {
+  //   try {
+  //     if (xfile == null) {
+  //       throw Exception('Invalid XFile provided.');
+  //     }
+
+  //     final originalName = path.basename(xfile.path);
+  //     final fileName = '${DateTime.now().millisecondsSinceEpoch}_$originalName';
+
+  //     final assetFilePath = '$destinationPath/$fileName';
+
+  //     final byteData = await xfile.readAsBytes();
+  //     final buffer = byteData.buffer;
+  //     final fileContent = buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+
+  //     final savedDir = Directory(destinationPath);
+  //     if (!savedDir.existsSync()) {
+  //       savedDir.createSync(recursive: true);
+  //     }
+
+  //     final file = File(assetFilePath);
+  //     await file.writeAsBytes(fileContent);
+
+  //     return assetFilePath;
+  //   } catch (e) {
+  //     print('Failed to save XFile: $e');
+  //     return '';
+  //   }
+  // }
 }
