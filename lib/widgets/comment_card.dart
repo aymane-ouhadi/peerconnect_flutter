@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/widgets/avatar_placeholder.dart';
 import 'package:peerconnect_flutter/models/Comment.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/services/ComfortService.dart';
@@ -21,7 +22,7 @@ class CommentCard extends StatefulWidget {
 
 class _CommentCardState extends State<CommentCard> {
 
-  User? user;
+  User user = User.empty();
 
   @override
   void didChangeDependencies() {
@@ -50,7 +51,17 @@ class _CommentCardState extends State<CommentCard> {
               Container(
                 width: 30,
                 height: 30,
-                child: const Placeholder(),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(1000)
+                ),
+                child: user.profilePicture == null
+                ?
+                  Image.network(
+                    user.profilePicture as String,
+                    fit: BoxFit.cover,
+                  )
+                :
+                  AvatarPlaceholder(user: user)
               ),
               SizedBox(width: 10),
               Column(

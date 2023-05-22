@@ -69,7 +69,14 @@ class _PostState extends State<PostScreen> {
                   user: postDetailsModel!.user,
                   doLike: (Like like){
                     setState(() {
-                      postDetailsModel!.likes.add(like);
+                      if(!postDetailsModel!.likes.any((likeElement) => likeElement.userId == like.userId)){
+                        print("liked");
+                        postDetailsModel!.likes.add(like);
+                      }
+                      else{
+                        print("unliked : ${postDetailsModel!.likes}");
+                        postDetailsModel!.likes.removeWhere((element) => element.userId == like.userId);
+                      }
                     });
                   },
                 ),
@@ -147,7 +154,8 @@ class PostContent extends StatefulWidget {
     required this.likes, 
     required this.post,
     required this.comments, 
-    required this.user, required this.doLike
+    required this.user, 
+    required this.doLike
   }) : super(key: key);
 
   @override
@@ -219,7 +227,7 @@ class _PostContentState extends State<PostContent> {
                         );
                       });
                     },
-                    child: Icon(widget.likes.length <= 0 ? Icons.favorite_outline : Icons.favorite, size: 25,),
+                    child: Icon(widget.likes.any((like) => like.userId == Provider.of<AuthProvider>(context).user.id) ? Icons.favorite : Icons.favorite_outline, size: 25,),
                   ),
                   SizedBox(height: 5),
                   Text("${widget.likes.length}")
