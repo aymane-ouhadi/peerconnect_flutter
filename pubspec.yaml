@@ -17,6 +17,10 @@ dependencies:
   fluttertoast:
   path_provider:
   cached_network_image:
+  firebase_storage:
+  permission_handler:
+  firebase_core:
+  cloud_firestore:
 
 dev_dependencies:
   flutter_test:

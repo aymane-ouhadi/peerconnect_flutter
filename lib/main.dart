@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/screens/home.dart';
 import 'package:peerconnect_flutter/screens/login.dart';
@@ -8,7 +9,9 @@ import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider<AuthProvider>(
       create: (_) => AuthProvider(),

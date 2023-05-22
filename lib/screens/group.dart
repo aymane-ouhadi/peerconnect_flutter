@@ -49,7 +49,10 @@ class _GroupScreenState extends State<GroupScreen> with SingleTickerProviderStat
               Container(
                 width: double.infinity,
                 height: 200,
-                child: Placeholder(),
+                child: Image.network(
+                  groupDetailsModel.group.groupPicture,
+                  fit: BoxFit.cover,
+                ),
               ),
               Container(
                 width: double.infinity,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
+import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/widgets/bottom_sheet.dart';
+import 'package:peerconnect_flutter/widgets/avatar_placeholder.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +31,6 @@ class _TopBarState extends State<TopBar> {
     super.didChangeDependencies();
     AuthProvider provider = Provider.of<AuthProvider>(context, listen: false);
     user = provider.user;
-    print("user : $user");
   }
 
   @override
@@ -73,21 +74,8 @@ class _TopBarState extends State<TopBar> {
                 },
               );
             },
-            child: Container(
-              width: 50,
-              height: 50,
-              child: 
-                // user.profilePicture == ""
-                // ?
-                //   Image(
-                //     image: FileImage(File(user.coverPicture as String)),
-                //     fit: BoxFit.cover,
-                //   )
-                // :
-                //   Image.asset("assets/images/avatar.png")
-                Image.asset("assets/images/avatar.png", fit: BoxFit.cover,)
+            child: AvatarPlaceholder(user: user)
             ),
-          )
         ],
       ),
     );

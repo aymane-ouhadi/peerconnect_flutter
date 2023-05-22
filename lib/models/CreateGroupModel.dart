@@ -1,12 +1,14 @@
 class CreateGroupModel {
   String adminId;
   String name;
+  String picture;
   String description;
   List<String> rulesDescription;
 
   CreateGroupModel({
     required this.adminId,
     required this.name,
+    required this.picture,
     required this.description,
     required this.rulesDescription,
   });
@@ -18,6 +20,7 @@ class CreateGroupModel {
     return CreateGroupModel(
       adminId: json['adminId'],
       name: json['name'],
+      picture: json['picture'],
       description: json['description'],
       rulesDescription: rulesDescription,
     );
@@ -27,6 +30,7 @@ class CreateGroupModel {
         'adminId': adminId,
         'name': name,
         'description': description,
+        'picture': picture,
         'rulesDescription': rulesDescription,
       };
 
@@ -35,6 +39,7 @@ class CreateGroupModel {
       adminId: '',
       name: '',
       description: '',
+      picture: '',
       rulesDescription: [],
     );
   }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075982222544",
+    "project_id": "peerconnect-25c9f",
+    "storage_bucket": "peerconnect-25c9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075982222544:android:1ee5f6592ab7a5c5cecad5",
+        "android_client_info": {
+          "package_name": "com.example.peerconnect_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075982222544-7fifu7i86eav5bkracbh09r6evvve7fv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWDnEnugEcQhQRqn60ouvMMB5EJr7rpbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075982222544-7fifu7i86eav5bkracbh09r6evvve7fv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

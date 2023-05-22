@@ -3,6 +3,7 @@ import 'package:peerconnect_flutter/models/Comment.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:peerconnect_flutter/widgets/avatar_placeholder.dart';
 
 class CommentForm extends StatelessWidget {
 
@@ -11,13 +12,16 @@ class CommentForm extends StatelessWidget {
   final Post post;
   final List<Comment> comments;
 
+  String? comment = "";
 
-  const CommentForm({
+
+  CommentForm({
     Key? key,
     required this.user,
     required this.submitComment, 
     required this.post, 
-    required this.comments
+    required this.comments,
+    this.comment
   }) : super(key: key);
 
   @override
@@ -36,23 +40,27 @@ class CommentForm extends StatelessWidget {
           Container(
             width: 30,
             height: 30,
-            child: Placeholder(),
+            child: AvatarPlaceholder(user: user,)
           ),
+          SizedBox(width: 10,),
           //---------------------------------- This needs some work
-          // TextField(
-          //   onChanged: (value){
-
-          //   },
-          //   decoration: InputDecoration(
-          //     // hintText: "What do you Think ${user.firstName}?"
-          //     hintText: "What do you Think ?"
-          //   ),
-          // ),
+          Flexible(
+            child: TextField(
+              onChanged: (value){
+                comment = value;
+              },
+              decoration: InputDecoration(
+                hintText: "What do you Think ${user.firstName}?",
+                border: InputBorder.none
+                // hintText: "What do you Think ?"
+              ),
+            ),
+          ),
           GestureDetector(
             onTap: (){
               submitComment(
                 comments,
-                "abc",
+                comment,
                 user,
                 post
               );

@@ -42,7 +42,7 @@ class CreateEventModel {
         'userId': userId,
         'groupId': groupId,
         'title': title,
-        'picture': "",
+        'picture': picture,
         'description': description,
         'eventDate': eventDate,
       };

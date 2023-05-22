@@ -4,11 +4,14 @@ import 'package:peerconnect_flutter/models/Like.dart';
 import 'package:peerconnect_flutter/models/PostDetailsModel.dart';
 import 'package:peerconnect_flutter/models/Post.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/PostService.dart';
 import 'package:peerconnect_flutter/utils/samples.dart';
 import 'package:peerconnect_flutter/widgets/comment_card.dart';
+import 'package:peerconnect_flutter/widgets/avatar_placeholder.dart';
 import 'package:peerconnect_flutter/widgets/comment_form.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
+import 'package:provider/provider.dart';
 
 class PostScreen extends StatefulWidget {
 
@@ -22,17 +25,20 @@ class _PostState extends State<PostScreen> {
 
   PostDetailsModel? postDetailsModel = PostDetailsModel.empty();
 
+  AuthProvider? provider;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     
     final postId = ModalRoute.of(context)!.settings.arguments as String;
 
+    provider = Provider.of<AuthProvider>(context, listen: false);
+
     PostService.fetchPostDetails(postId).then(
       (value){
         setState(() {
           postDetailsModel = value;
-          // postDetailsModel = Samples.fetchPost();
         });
       }
     );
@@ -54,14 +60,21 @@ class _PostState extends State<PostScreen> {
                   group: postDetailsModel?.group.name as String,
                   firstName: postDetailsModel!.user.firstName,
                   lastName: postDetailsModel!.user.lastName,
+                  user: postDetailsModel!.user,
                 ),
                 PostContent(
                   likes: postDetailsModel!.likes,
                   post: postDetailsModel!.post,
                   comments: postDetailsModel!.comments,
+                  user: postDetailsModel!.user,
+                  doLike: (Like like){
+                    setState(() {
+                      postDetailsModel!.likes.add(like);
+                    });
+                  },
                 ),
                 PostBottom(
-                  user: postDetailsModel!.user, 
+                  user: provider!.user, 
                   comments: postDetailsModel!.comments,
                   post: postDetailsModel!.post,
                 )
@@ -79,12 +92,14 @@ class AuthorBar extends StatelessWidget {
   final String group;
   final String firstName;
   final String lastName;
+  final User user;
 
   const AuthorBar({
     Key? key,
     required this.group,
     required this.firstName,
     required this.lastName,
+    required this.user,
   });
 
   @override
@@ -92,11 +107,7 @@ class AuthorBar extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          child: Placeholder(),
-        ),
+        AvatarPlaceholder(user: user),
         SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,12 +138,16 @@ class PostContent extends StatefulWidget {
   final List<Comment> comments;
   final List<Like> likes;
   final Post post;
+  final User user;
+
+  final Function(Like) doLike;
 
   const PostContent({
     Key? key,
     required this.likes, 
     required this.post,
-    required this.comments
+    required this.comments, 
+    required this.user, required this.doLike
   }) : super(key: key);
 
   @override
@@ -140,8 +155,20 @@ class PostContent extends StatefulWidget {
 }
 
 class _PostContentState extends State<PostContent> {
+
+  AuthProvider? provider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    provider = Provider.of<AuthProvider>(context, listen: false);
+
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: 30),
       child: Column(
@@ -158,13 +185,21 @@ class _PostContentState extends State<PostContent> {
           Container(
             width: double.infinity,
             child: Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15)
+              ),
               width: double.infinity,
               height: 200,
-              child: Image.asset(
-                "assets/images/barbecue.png", 
-                fit: BoxFit.fill,
-                width: double.infinity,
-              ),
+              child: widget.post.picture == "" 
+              ?
+                Container()
+              :
+                Image.network(
+                  widget.post.picture, 
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
             ),
           ),
           SizedBox(height: 30),
@@ -176,15 +211,15 @@ class _PostContentState extends State<PostContent> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        // if(widget.likes.where((like) => false)){
-
-                        // }
-                        // else{
-                          
-                        // }
+                        widget.doLike(
+                          Like(
+                            postId: widget.post.id,
+                            userId: widget.user.id
+                          )
+                        );
                       });
                     },
-                    child: Icon(Icons.favorite_outline, size: 25,),
+                    child: Icon(widget.likes.length <= 0 ? Icons.favorite_outline : Icons.favorite, size: 25,),
                   ),
                   SizedBox(height: 5),
                   Text("${widget.likes.length}")

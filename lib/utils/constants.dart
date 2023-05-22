@@ -14,13 +14,15 @@ class Constants {
 
   static String api = "https://peerconnect-backend.onrender.com";
 
-  static String uploadedCoversBase = "assets/uploads/covers";
+  static String uploadedCoversBase = "covers";
 
-  static String uploadedEventsBase = "assets/uploads/events";
+  static String uploadedEventsBase = "events";
 
-  static String uploadedPostsBase = "assets/uploads/posts";
+  static String uploadedPostsBase = "posts";
 
-  static String uploadedProfilesBase = "assets/uploads/profiles";
+  static String uploadedProfilesBase = "profiles";
+
+  static String uploadedGroupsBase = "groups";
   
   static Map<String, Map<String, IconBuilder>> routes = {
     "/home": {

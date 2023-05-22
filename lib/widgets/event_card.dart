@@ -52,8 +52,9 @@ class _EventCardState extends State<EventCard> {
           children: [
             Container(
               width: double.infinity,
-              child: Image.asset(
-                "assets/images/barbecue.png", 
+              height: 200,
+              child: Image.network(
+                widget.event.picture, 
                 fit: BoxFit.cover,
                 width: double.infinity,
               )

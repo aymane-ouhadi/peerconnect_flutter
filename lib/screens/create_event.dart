@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:peerconnect_flutter/models/CreateEventModel.dart';
+import 'package:peerconnect_flutter/services/ComfortService.dart';
 import 'package:peerconnect_flutter/services/EventService.dart';
+import 'package:peerconnect_flutter/utils/constants.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/date_input.dart';
 import 'package:peerconnect_flutter/widgets/image_input.dart';
@@ -23,6 +25,8 @@ class _CreatePostScreenState extends State<CreateEventScreen> {
   bool isFetching = false;
 
   Map<String, String>? arguments; 
+
+  XFile? picture;
 
   @override
   void didChangeDependencies() {
@@ -73,7 +77,7 @@ class _CreatePostScreenState extends State<CreateEventScreen> {
                 ImageInput(
                   hintText: "Picture",
                   onChanged: (XFile? file){
-                    
+                    picture = file;
                   },
                 ),
                 const SizedBox(height: 40),
@@ -96,10 +100,23 @@ class _CreatePostScreenState extends State<CreateEventScreen> {
                     foregroundColor: Colors.white,
                   ),
                   child: Text(isFetching ? "Publishing..." : "Publish to the group"),
-                  onPressed: (){
+                  onPressed: () async {
                     setState(() {
                       isFetching = true;
                     });
+
+                    //Saving the post picture
+                    String picturePath = await ComfortService.saveFile(
+                      picture,
+                      Constants.uploadedEventsBase
+                    );
+
+                    setState(() {
+                      createEventModel.picture = picturePath;
+                    });
+
+                    print("Data : ${createEventModel}");
+
                     EventService.createEvent(createEventModel).then(
                       (value){
                         //Status code

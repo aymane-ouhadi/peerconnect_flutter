@@ -1,15 +1,17 @@
 class Group {
-  final String id;
-  final String createdAt;
-  final String name;
-  final String description;
-  final List<String> rules;
+  String id;
+  String createdAt;
+  String name;
+  String description;
+  String groupPicture;
+  List<String> rules;
 
   Group({
     required this.id,
     required this.createdAt,
     required this.name,
     required this.description,
+    required this.groupPicture,
     required this.rules,
   });
 
@@ -22,6 +24,7 @@ class Group {
       createdAt: json['_createdAt'],
       name: json['name'],
       description: json['description'],
+      groupPicture: json['picture'],
       rules: rules,
     );
   }
@@ -31,6 +34,7 @@ class Group {
         'createdAt': createdAt,
         'name': name,
         'description': description,
+        'picture': groupPicture,
         'rules': rules,
       };
 
@@ -40,6 +44,7 @@ class Group {
       createdAt: '',
       name: '',
       description: '',
+      groupPicture: '',
       rules: [],
     );
   }

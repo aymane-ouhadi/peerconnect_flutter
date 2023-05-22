@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:peerconnect_flutter/models/CreateGroupModel.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
+import 'package:peerconnect_flutter/services/ComfortService.dart';
 import 'package:peerconnect_flutter/services/GroupService.dart';
+import 'package:peerconnect_flutter/utils/constants.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/date_input.dart';
 import 'package:peerconnect_flutter/widgets/image_input.dart';
@@ -23,6 +26,7 @@ class _CreatePostScreenState extends State<CreateGroupScreen> {
 
   bool isFetching = false;
 
+  XFile? picture;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +61,13 @@ class _CreatePostScreenState extends State<CreateGroupScreen> {
                 ),
                 
                 const SizedBox(height: 40),
+                ImageInput(
+                  hintText: "Picture",
+                  onChanged: (XFile? file){
+                    picture = file;
+                  },
+                ),
+                const SizedBox(height: 40),
                 // ImageInput(hintText: "Picture"),
                 // const SizedBox(height: 40),
                 ElevatedButton(
@@ -69,21 +80,33 @@ class _CreatePostScreenState extends State<CreateGroupScreen> {
                     foregroundColor: Colors.white,
                   ),
                   child: Text(isFetching ? "Creating..." : "Create the group"),
-                  onPressed: (){
+                  onPressed: () async {
                     setState(() {
                       isFetching = true;
-                      createGroupModel.adminId = Provider.of<AuthProvider>(context, listen: false).user.id;
-                      print("Data : $createGroupModel");
-                      GroupService.createGroup(createGroupModel).then(
-                        (value){
-                          //Status code
-                          isFetching = false;
-                          print("status : $value");
-                          Navigator.pushNamed(context, "/home");
-                        }
-                      );
-                      
                     });
+
+                    createGroupModel.adminId = Provider.of<AuthProvider>(context, listen: false).user.id;
+
+                    //Saving the post picture
+                    String picturePath = await ComfortService.saveFile(
+                      picture,
+                      Constants.uploadedGroupsBase
+                    );
+
+                    print("Data : $createGroupModel");
+
+                    setState(() {
+                      createGroupModel.picture = picturePath;
+                    });
+
+                    GroupService.createGroup(createGroupModel).then(
+                      (value){
+                        setState(() {
+                          isFetching = false;
+                        });
+                        Navigator.pushNamed(context, "/home");
+                      }
+                    );
                   }, 
                 ),
                 // BottomAction(

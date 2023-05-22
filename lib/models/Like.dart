@@ -1,10 +1,10 @@
 class Like {
-  final String id;
+  String? id;
   final String userId;
   final String postId;
 
   Like({
-    required this.id,
+    this.id,
     required this.userId,
     required this.postId,
   });

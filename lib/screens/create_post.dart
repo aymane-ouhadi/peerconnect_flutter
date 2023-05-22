@@ -3,7 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:peerconnect_flutter/models/CreatePostModel.dart';
+import 'package:peerconnect_flutter/services/ComfortService.dart';
 import 'package:peerconnect_flutter/services/PostService.dart';
+import 'package:peerconnect_flutter/utils/constants.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/bottom_action.dart';
 import 'package:peerconnect_flutter/widgets/image_input.dart';
@@ -25,7 +27,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   bool isFetching = false;
 
-  Map<String, String>? arguments; 
+  Map<String, String>? arguments;
+
+  XFile? picture; 
 
   @override
   void didChangeDependencies() {
@@ -75,7 +79,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 ImageInput(
                   hintText: "Picture",
                   onChanged: (XFile? file) {
-
+                    picture = file;
                   },
                 ),
                 const SizedBox(height: 40),
@@ -89,10 +93,21 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     foregroundColor: Colors.white,
                   ),
                   child: Text(isFetching ? "Posting..." : "Post to the group"),
-                  onPressed: (){
-                    setState(() {
-                      isFetching = true;
-                    });
+                  onPressed: () async {
+                      setState(() {
+                        isFetching = true;
+                      });
+
+                      //Saving the post picture
+                      String picturePath = await ComfortService.saveFile(
+                        picture,
+                        Constants.uploadedPostsBase
+                      );
+
+                      setState(() {
+                        createPostModel.picture = picturePath;
+                      });
+
                       print("Data : $createPostModel");
                       PostService.createPost(createPostModel as CreatePostModel).then(
                         (value){

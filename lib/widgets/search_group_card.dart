@@ -48,8 +48,8 @@ class SearchGroupCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(1000)
                     ),
-                    child: Image.asset(
-                      "assets/images/barbecue.png",
+                    child: Image.network(
+                      group.group.groupPicture,
                       fit: BoxFit.cover,
                     ),
                   ),

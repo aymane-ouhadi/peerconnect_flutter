@@ -55,7 +55,8 @@ class GroupsCard extends StatelessWidget {
                 )
               :
                 Wrap(
-                  alignment: WrapAlignment.spaceBetween,
+                  alignment: groups.length >=3 ? WrapAlignment.spaceBetween : WrapAlignment.start,
+                  spacing: groups.length >=3 ? 0 : 35,
                   runSpacing: 30,
                   children: groups.take(6).map((group){
                     return Container(
@@ -69,8 +70,8 @@ class GroupsCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(1000)
                             ),
-                            child: Image.asset(
-                              "assets/images/barbecue.png", 
+                            child: Image.network(
+                              group.groupPicture, 
                               fit: BoxFit.cover,
                               width: double.infinity,
                             ),

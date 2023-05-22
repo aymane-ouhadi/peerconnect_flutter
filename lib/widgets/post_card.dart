@@ -32,9 +32,10 @@ class PostCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(0),
                 width: double.infinity,
-                child: Image.asset(
-                  "assets/images/barbecue.png", 
-                  fit: BoxFit.fill,
+                height: 150,
+                child: Image.network(
+                  post.picture, 
+                  fit: BoxFit.cover,
                   width: double.infinity,
                 )
                 // child: Container(child: Placeholder(), height: 150,),

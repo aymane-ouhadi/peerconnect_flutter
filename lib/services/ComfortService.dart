@@ -1,6 +1,7 @@
 //This class is a service that has static methods to format UI components
 //All you'll see here is some methods I isolated here to keep the widgets as clean as possible
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:image_picker/image_picker.dart';
@@ -50,25 +51,17 @@ class ComfortService {
 
   static Future<String> saveFile(XFile? xfile, String destinationPath) async {
     try {
-      if (xfile == null) {
-        throw Exception('Invalid XFile provided.');
-      }
 
-      final originalName = path.basename(xfile.path);
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}_$originalName';
+      print("File name : ${xfile!.name}");
 
-      final appDir = await getApplicationDocumentsDirectory();
-      final savedDir = Directory('${appDir.path}/$destinationPath');
-      if (!savedDir.existsSync()) {
-        savedDir.createSync(recursive: true);
-      }
+      final path = "${destinationPath}/${DateTime.now().millisecondsSinceEpoch}_${xfile!.name}";
+      final file = File(xfile!.path);
 
-      final savedFilePath = '${savedDir.path}/$fileName';
+      final ref = FirebaseStorage.instance.ref().child(path);
+      await ref.putFile(file);
 
-      final byteData = await xfile.readAsBytes();
-      await File(savedFilePath).writeAsBytes(byteData.buffer.asUint8List());
+      return await ref.getDownloadURL();
 
-      return savedFilePath;
     } catch (e) {
       print('Failed to save XFile: $e');
       return '';
@@ -84,21 +77,18 @@ class ComfortService {
   //     final originalName = path.basename(xfile.path);
   //     final fileName = '${DateTime.now().millisecondsSinceEpoch}_$originalName';
 
-  //     final assetFilePath = '$destinationPath/$fileName';
-
-  //     final byteData = await xfile.readAsBytes();
-  //     final buffer = byteData.buffer;
-  //     final fileContent = buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
-
-  //     final savedDir = Directory(destinationPath);
+  //     final appDir = await getApplicationDocumentsDirectory();
+  //     final savedDir = Directory('${appDir.path}/$destinationPath');
   //     if (!savedDir.existsSync()) {
   //       savedDir.createSync(recursive: true);
   //     }
 
-  //     final file = File(assetFilePath);
-  //     await file.writeAsBytes(fileContent);
+  //     final savedFilePath = '${savedDir.path}/$fileName';
 
-  //     return assetFilePath;
+  //     final byteData = await xfile.readAsBytes();
+  //     await File(savedFilePath).writeAsBytes(byteData.buffer.asUint8List());
+
+  //     return savedFilePath;
   //   } catch (e) {
   //     print('Failed to save XFile: $e');
   //     return '';
