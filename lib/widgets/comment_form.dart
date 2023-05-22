@@ -13,6 +13,7 @@ class CommentForm extends StatelessWidget {
   final List<Comment> comments;
 
   String? comment = "";
+  TextEditingController textEditingController = TextEditingController();
 
 
   CommentForm({
@@ -26,6 +27,7 @@ class CommentForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(vertical: 20),
@@ -46,6 +48,7 @@ class CommentForm extends StatelessWidget {
           //---------------------------------- This needs some work
           Flexible(
             child: TextField(
+              controller: textEditingController,
               onChanged: (value){
                 comment = value;
               },
@@ -64,6 +67,8 @@ class CommentForm extends StatelessWidget {
                 user,
                 post
               );
+              textEditingController.clear();
+              FocusManager.instance.primaryFocus?.unfocus();
             },
             child: Text("Submit", style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.primaryColor)),
           )

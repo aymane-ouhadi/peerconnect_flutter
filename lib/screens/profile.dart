@@ -55,8 +55,8 @@ class _ProfileState extends State<Profile> {
                     fit: BoxFit.cover,
                   )
                 :
-                  Image(
-                    image: FileImage(File(userProfileModel.user.coverPicture ?? "")),
+                  Image.network(
+                    userProfileModel.user.coverPicture as String,
                     fit: BoxFit.cover,
                   )
               ),
