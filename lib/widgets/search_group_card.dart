@@ -7,6 +7,7 @@ import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/GroupService.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
+import 'package:peerconnect_flutter/widgets/group_placeohlder.dart';
 import 'package:provider/provider.dart';
 
 class SearchGroupCard extends StatelessWidget {
@@ -48,10 +49,15 @@ class SearchGroupCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(1000)
                     ),
-                    child: Image.network(
-                      group.group.groupPicture,
-                      fit: BoxFit.cover,
-                    ),
+                    child: 
+                    group.group.groupPicture != ""
+                    ?
+                      Image.network(
+                        group.group.groupPicture,
+                        fit: BoxFit.cover,
+                      )
+                    :
+                      GroupPlaceholder(group: group.group),
                   ),
                   SizedBox(width: 15),
                   Column(

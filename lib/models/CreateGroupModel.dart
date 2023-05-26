@@ -46,6 +46,11 @@ class CreateGroupModel {
 
   @override
   String toString() {
-    return "CreateGroupModel: ${name}, admin: $adminId";
+    return 'CreateGroupModel{'
+        'adminId: $adminId, '
+        'name: $name, '
+        'description: $description, '
+        'rulesDescription: $rulesDescription'
+        '}';
   }
 }

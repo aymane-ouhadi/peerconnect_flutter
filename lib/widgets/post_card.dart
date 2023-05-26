@@ -32,12 +32,17 @@ class PostCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(0),
                 width: double.infinity,
-                height: 150,
-                child: Image.network(
-                  post.picture, 
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                )
+                height: post.picture != "" ? 150 : 0,
+                child: 
+                post.picture != "" 
+                ? 
+                  Image.network(
+                    post.picture, 
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  )
+                :
+                  null
                 // child: Container(child: Placeholder(), height: 150,),
               ),
               Container(

@@ -3,6 +3,7 @@ import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:peerconnect_flutter/widgets/avatar_placeholder.dart';
 
 class MemberCard extends StatelessWidget {
 
@@ -17,7 +18,15 @@ class MemberCard extends StatelessWidget {
         Container(
           width: 40,
           height: 40,
-          child: Placeholder(),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1000)
+          ),
+          child: user.profilePicture != ""
+          ?
+            Image.network(user.profilePicture as String)
+          :
+            AvatarPlaceholder(user: user)
+          ,
         ),
         SizedBox(width: 15),
         Column(

@@ -8,6 +8,8 @@ import 'package:peerconnect_flutter/utils/constants.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/date_input.dart';
 import 'package:peerconnect_flutter/widgets/image_input.dart';
+import 'package:peerconnect_flutter/widgets/rule_card.dart';
+import 'package:peerconnect_flutter/widgets/rule_input.dart';
 import 'package:peerconnect_flutter/widgets/section_header.dart';
 import 'package:peerconnect_flutter/widgets/text_input.dart';
 import 'package:peerconnect_flutter/widgets/top_bar.dart';
@@ -67,6 +69,28 @@ class _CreatePostScreenState extends State<CreateGroupScreen> {
                     picture = file;
                   },
                 ),
+                const SizedBox(height: 40),
+                RuleInput(
+                  hintText: "Rules",
+                  value: createGroupModel.description,
+                  onChanged: (value) {
+                    createGroupModel.description = value;
+                  },
+                  onSuffixIconTap: (String rule){
+                    setState(() {
+                      createGroupModel.rulesDescription.add(rule);
+                    });
+                  },
+                ),
+                const SizedBox(height: 40),
+                ...createGroupModel.rulesDescription.map((rule) => RuleCard(
+                  rule: rule, 
+                  onCancelTap: (String rule){ 
+                    setState(() {
+                      createGroupModel.rulesDescription.remove(rule);
+                    }); 
+                  },
+                )),
                 const SizedBox(height: 40),
                 // ImageInput(hintText: "Picture"),
                 // const SizedBox(height: 40),

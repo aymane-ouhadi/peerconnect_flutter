@@ -49,10 +49,21 @@ class _GroupScreenState extends State<GroupScreen> with SingleTickerProviderStat
               Container(
                 width: double.infinity,
                 height: 200,
-                child: Image.network(
-                  groupDetailsModel.group.groupPicture,
-                  fit: BoxFit.cover,
+                decoration: BoxDecoration(
+                  color: UIService.getRandomDarkColor()
                 ),
+                child: 
+                groupDetailsModel.group.groupPicture != ""
+                ?
+                  Image.network(
+                    groupDetailsModel.group.groupPicture,
+                    fit: BoxFit.cover,
+                  )
+                :
+                  Center(
+                    child: Text(groupDetailsModel.group.name[0], style: TextStyle(fontSize: 30, color: Colors.white),),
+                  )
+                ,
               ),
               Container(
                 width: double.infinity,

@@ -4,6 +4,7 @@ import 'package:peerconnect_flutter/models/group.dart';
 import 'package:peerconnect_flutter/services/UIService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/empty_state.dart';
+import 'package:peerconnect_flutter/widgets/group_placeohlder.dart';
 
 class GroupsCard extends StatelessWidget {
 
@@ -70,11 +71,12 @@ class GroupsCard extends StatelessWidget {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(1000)
                             ),
-                            child: Image.network(
-                              group.groupPicture, 
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                            ),
+                            // child: Image.network(
+                            //   group.groupPicture, 
+                            //   fit: BoxFit.cover,
+                            //   width: double.infinity,
+                            // ),
+                            child: GroupPlaceholder(group: group),
                           ),
                           SizedBox(height: 20,),
                           Text(UIService.substring(group.name, 10), style: TextStyle(fontWeight: FontWeight.bold),)

@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
                 width: double.infinity, 
                 height: 200, 
                 child: 
-                userProfileModel.user.coverPicture == null
+                userProfileModel.user.coverPicture == ""
                 ?
                   Image.asset(
                     "assets/images/default_cover_1.jpg",
