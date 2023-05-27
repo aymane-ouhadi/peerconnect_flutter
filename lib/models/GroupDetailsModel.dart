@@ -9,6 +9,7 @@ class GroupDetailsModel {
   final bool isMember;
   final String? requestState;
   final List<User> members;
+  final List<User> pending;
   final List<Event> events;
   final List<Post> posts;
 
@@ -17,6 +18,7 @@ class GroupDetailsModel {
     required this.group,
     required this.isMember,
     required this.members,
+    required this.pending,
     required this.events,
     required this.posts,
   });
@@ -27,6 +29,7 @@ class GroupDetailsModel {
       isMember: json['member'],
       requestState: json['requestState'],
       members: (json['members'] as List).map((e) => User.fromJson(e)).toList(),
+      pending: (json['pending'] as List).map((e) => User.fromJson(e)).toList(),
       events: (json['events'] as List).map((e) => Event.fromJson(e)).toList(),
       posts: (json['posts'] as List).map((e) => Post.fromJson(e)).toList(),
     );
@@ -47,6 +50,7 @@ class GroupDetailsModel {
       isMember: false,
       requestState: null,
       members: [],
+      pending: [],
       events: [],
       posts: [],
     );

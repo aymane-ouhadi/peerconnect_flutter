@@ -159,6 +159,7 @@ class PageInfo extends StatelessWidget {
                       return AboutGroupSheet(
                         group: groupDetailsModel.group,
                         members: groupDetailsModel.members,
+                        pending: groupDetailsModel.pending,
                       );
                     },
                   );

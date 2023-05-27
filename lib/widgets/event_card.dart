@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/Event.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/ComfortService.dart';
 import 'package:peerconnect_flutter/utils/helpers.dart';
+import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/utils/samples.dart';
+import 'package:provider/provider.dart';
 
 class EventCard extends StatefulWidget {
 
@@ -66,8 +69,8 @@ class _EventCardState extends State<EventCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   EventTop(title: widget.event.title, date: ComfortService.formatDate(widget.event.eventDate)),
-                  EventCenter(attendees: attendees, description: widget.event.description),
-                  EventBottom(isGoing: attendees.contains(authenticatedUser), handleAttendance: handleAttendance)
+                  EventCenter(attendees: attendees, description: widget.event.description, userId: widget.event.userId,),
+                  EventBottom(isGoing: attendees.contains(authenticatedUser), handleAttendance: handleAttendance, userId: widget.event.userId,)
                 ],
               ),
             ),
@@ -125,17 +128,30 @@ class EventTop extends StatelessWidget {
   }
 }
 
-class EventCenter extends StatelessWidget {
+class EventCenter extends StatefulWidget {
 
   final String description;
 
   final List<User> attendees;
 
+  final String userId;
+
   const EventCenter({
     Key? key,
     required this.description, 
-    required this.attendees
+    required this.attendees, 
+    required this.userId
   }) : super(key: key);
+
+  @override
+  State<EventCenter> createState() => _EventCenterState();
+}
+
+class _EventCenterState extends State<EventCenter> {
+
+  bool readMore = false;
+
+  final MAX = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -150,26 +166,52 @@ class EventCenter extends StatelessWidget {
             child: Row(
               children: [
                 //I should add the attendees bubbles here
-                Text(
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600
-                  ),
-                  attendees.length <= 1
-                  ?
-                    "Be one of first to attend this event"
-                  :
+                widget.userId == Provider.of<AuthProvider>(context, listen: false).user.id
+                ?
+                  Container(height: 0,)
+                :
+                  Text(
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600
+                    ),
+                    widget.attendees.length <= 1
+                    ?
+                      "Be one of first to attend this event"
+                    :
 
-                    "${attendees.length} people are going to the event"
-                ),
+                      "${widget.attendees.length} people are going to the event"
+                  ),
               ],
             ),
           ),
           Text(
-            Helpers.substring(description, 130),
+            !readMore ? Helpers.substring(widget.description, MAX) : widget.description,
             style: TextStyle(
               color: Colors.grey[800]
             ),
+          ),
+          widget.description.length > MAX
+          ?
+          GestureDetector(
+            onTap: (){
+              
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 20),
+              width: double.infinity,
+              child: Text(
+                readMore ? "Show Less": "Show More",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: MyColors.primaryColor),
+              ),
+            )
           )
+          :
+          Container(
+            width: 0,
+            height: 0,
+          )
+          
         ],
       ),
     );
@@ -181,11 +223,14 @@ class EventBottom extends StatefulWidget {
   final bool isGoing;
 
   final Function handleAttendance;
+  
+  final String userId;
 
   const EventBottom({
     Key? key,
     required this.isGoing, 
-    required this.handleAttendance
+    required this.handleAttendance, 
+    required this.userId
   }) : super(key: key);
 
   @override
@@ -195,6 +240,7 @@ class EventBottom extends StatefulWidget {
 class _EventBottomState extends State<EventBottom> {
 
   late bool isGoing;
+
 
   @override
   void initState() {
@@ -206,7 +252,10 @@ class _EventBottomState extends State<EventBottom> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: ElevatedButton(
+      child: 
+      widget.userId != Provider.of<AuthProvider>(context, listen: false).user.id
+      ?      
+      ElevatedButton(
         style: isGoing 
         ?
           ElevatedButton.styleFrom(
@@ -245,7 +294,9 @@ class _EventBottomState extends State<EventBottom> {
             ],
           ),
         ),
-      ),
+      )
+      :
+      null
     );
   }
 }

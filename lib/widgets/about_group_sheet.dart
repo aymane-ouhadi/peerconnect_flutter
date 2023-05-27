@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:peerconnect_flutter/models/Group.dart';
 import 'package:peerconnect_flutter/models/User.dart';
+import 'package:peerconnect_flutter/services/GroupService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/widgets/member_card.dart';
+import 'package:peerconnect_flutter/widgets/pending_card.dart';
 
 class AboutGroupSheet extends StatelessWidget {
 
@@ -10,7 +13,9 @@ class AboutGroupSheet extends StatelessWidget {
 
   final List<User> members;
 
-  const AboutGroupSheet({super.key, required this.group, required this.members});
+  final List<User> pending;
+
+  const AboutGroupSheet({super.key, required this.group, required this.members, required this.pending});
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +99,58 @@ class AboutGroupSheet extends StatelessWidget {
                                 color: Colors.grey[600],
                               ),
                             ),
+                          ),
+                          SizedBox(height: 25,),
+                        ],
+                      );                      
+                    })
+                  ],
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: 25),
+                child: Container(
+                  child: Text(
+                    "Pending",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: [
+                    ...pending.map((member) {
+                      return Column(
+                        children: [
+                          PendingCard(
+                            user: member,
+                            onAccept: (){
+                              Fluttertoast.showToast(
+                                msg: "${member.firstName} is a part of the group now",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: MyColors.toastColor,
+                                timeInSecForIosWeb: 1,
+                              );
+                              GroupService.accept(member.id, group.id);
+                            },
+                            onRefuse: (){
+                              Fluttertoast.showToast(
+                                msg: "${member.firstName} is no longer a part of this group",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: MyColors.toastColor,
+                                timeInSecForIosWeb: 1,
+                              );
+                              GroupService.ban(member.id, group.id);
+                            },  
                           ),
                           SizedBox(height: 25,),
                         ],

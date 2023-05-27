@@ -123,6 +123,32 @@ class GroupService {
     }
   }
 
+  static Future<int> accept(
+    String userId,
+    String groupId,
+  ) async {
+
+    final queryParams = {
+      'userId': userId,
+      'groupId': groupId,
+    };
+
+    try{
+      final response = await http.put(
+        Uri.parse("${Constants.api}/groups/accept").replace(queryParameters: queryParams),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      return response.statusCode;
+    }
+    catch(e){
+      print("This is the error : $e.");
+      return 500;
+    }
+  }
+
   static Future<int> join(
     String userId,
     String groupId,

@@ -18,6 +18,7 @@ class MemberCard extends StatelessWidget {
         Container(
           width: 40,
           height: 40,
+          clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1000)
           ),
