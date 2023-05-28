@@ -6,7 +6,7 @@
 
 
    <application
-        android:label="peerconnect_flutter"
+        android:label="PeerConnect"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
