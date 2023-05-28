@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peerconnect_flutter/models/UserProfileModel.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/UserService.dart';
+import 'package:peerconnect_flutter/services/AuthenticationService.dart';
 import 'package:peerconnect_flutter/utils/my_colors.dart';
 import 'package:peerconnect_flutter/utils/routes.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,12 @@ class Constants {
   static String uploadedProfilesBase = "profiles";
 
   static String uploadedGroupsBase = "groups";
+
+  static String jwtKey = "mySecretKey";
+
+  static String jwtIssuer = "peerconnect";
+
+  static String jwtDisplayName = "peerconnect_jwt";
   
   static Map<String, Map<String, IconBuilder>> routes = {
     "/home": {
@@ -86,6 +93,7 @@ class Constants {
       "title": "Log out of your account",
       "color": MyColors.primaryColor,
       "onTap": (BuildContext context){
+        AuthenticationService.logout();
         Navigator.pushReplacementNamed(context, "/login");
       }
     },

@@ -3,6 +3,7 @@
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -66,6 +67,15 @@ class ComfortService {
       print('Failed to save XFile: $e');
       return '';
     }
+  }
+
+  
+  static Future<String> readFromLocalStorage(
+    String displayName
+  ) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return prefs.getString(displayName) ?? "";
   }
 
   // static Future<String> saveFile(XFile? xfile, String destinationPath) async {
