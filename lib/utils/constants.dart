@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peerconnect_flutter/models/EditProfileModel.dart';
+import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/models/UserProfileModel.dart';
 import 'package:peerconnect_flutter/provider/auth/AuthProvider.dart';
 import 'package:peerconnect_flutter/services/UserService.dart';
@@ -71,21 +73,36 @@ class Constants {
       "icon": const Icon(Icons.person_outline, color: Colors.black),
       "title": "Visit your profile",
       "color": Colors.black,
-      "onTap": (BuildContext context){
+      "onTap": (BuildContext context) async {
 
         String authenticatedUserId = Provider.of<AuthProvider>(context, listen: false).user.id;
 
         print("hi : $authenticatedUserId");
         
-        // UserService.fetchProfile(
-        //   authenticatedUserId
-        // ).then((value){
-        //     Navigator.pushNamed(
-        //       context, 
-        //       "/profile", 
-        //       arguments: value 
-        //     );
-        // }); 
+        UserProfileModel userProfileModel = await UserService.fetchProfile(authenticatedUserId); 
+        Navigator.pushReplacementNamed(
+          context, 
+          "/profile",
+          arguments: userProfileModel
+        );
+      }
+    },
+    {
+      "icon": const Icon(Icons.settings_outlined, color: Colors.black),
+      "title": "Edit your profile",
+      "color": Colors.black,
+      "onTap": (BuildContext context) async {
+
+        String authenticatedUserId = Provider.of<AuthProvider>(context, listen: false).user.id;
+
+        print("hi : $authenticatedUserId");
+        
+        User user = await UserService.fetchUser(authenticatedUserId); 
+        Navigator.pushReplacementNamed(
+          context, 
+          "/edit_profile",
+          arguments: EditProfileModel.adapt(user)
+        );
       }
     },
     {

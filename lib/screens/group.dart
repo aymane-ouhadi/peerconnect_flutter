@@ -160,6 +160,8 @@ class PageInfo extends StatelessWidget {
                         group: groupDetailsModel.group,
                         members: groupDetailsModel.members,
                         pending: groupDetailsModel.pending,
+                        rules: groupDetailsModel.rules,
+                        isAdmin: groupDetailsModel.isAdmin,
                       );
                     },
                   );

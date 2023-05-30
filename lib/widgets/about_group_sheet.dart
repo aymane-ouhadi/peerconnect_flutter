@@ -11,11 +11,15 @@ class AboutGroupSheet extends StatelessWidget {
 
   final Group group;
 
+  final List rules;
+
   final List<User> members;
 
   final List<User> pending;
 
-  const AboutGroupSheet({super.key, required this.group, required this.members, required this.pending});
+  final bool isAdmin;
+
+  const AboutGroupSheet({super.key, required this.group, required this.members, required this.pending, required this.rules, required this.isAdmin});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +91,7 @@ class AboutGroupSheet extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: 20),
                 child: Column(
                   children: [
-                    ...group.rules.map((rule) {
+                    ...rules.map((rule) {
                       return Column(
                         children: [
                           Container(
@@ -107,58 +111,67 @@ class AboutGroupSheet extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 25),
-                child: Container(
-                  child: Text(
-                    "Pending",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 20),
-                child: Column(
+              isAdmin
+              ?
+                Column(
                   children: [
-                    ...pending.map((member) {
-                      return Column(
-                        children: [
-                          PendingCard(
-                            user: member,
-                            onAccept: (){
-                              Fluttertoast.showToast(
-                                msg: "${member.firstName} is a part of the group now",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: MyColors.toastColor,
-                                timeInSecForIosWeb: 1,
-                              );
-                              GroupService.accept(member.id, group.id);
-                            },
-                            onRefuse: (){
-                              Fluttertoast.showToast(
-                                msg: "${member.firstName} is no longer a part of this group",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: MyColors.toastColor,
-                                timeInSecForIosWeb: 1,
-                              );
-                              GroupService.ban(member.id, group.id);
-                            },  
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(bottom: 25),
+                      child: Container(
+                        child: Text(
+                          "Pending",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20
                           ),
-                          SizedBox(height: 25,),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: Column(
+                        children: [
+                          ...pending.map((member) {
+                            return Column(
+                              children: [
+                                PendingCard(
+                                  user: member,
+                                  onAccept: (){
+                                    Fluttertoast.showToast(
+                                      msg: "${member.firstName} is a part of the group now",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      backgroundColor: MyColors.toastColor,
+                                      timeInSecForIosWeb: 1,
+                                    );
+                                    GroupService.accept(member.id, group.id);
+                                  },
+                                  onRefuse: (){
+                                    Fluttertoast.showToast(
+                                      msg: "${member.firstName} is no longer a part of this group",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      backgroundColor: MyColors.toastColor,
+                                      timeInSecForIosWeb: 1,
+                                    );
+                                    GroupService.ban(member.id, group.id);
+                                  },  
+                                ),
+                                SizedBox(height: 25,),
+                              ],
+                            );                      
+                          })
                         ],
-                      );                      
-                    })
+                      ),
+                    ),
+
                   ],
-                ),
-              ),
+                )
+              :
+                Container(),
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 25),
@@ -181,7 +194,19 @@ class AboutGroupSheet extends StatelessWidget {
                     ...members.map((member) {
                       return Column(
                         children: [
-                          MemberCard(user: member),
+                          MemberCard(
+                            user: member,
+                            onBan: (){
+                              Fluttertoast.showToast(
+                                msg: "${member.firstName} is no longer a part of this group",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: MyColors.toastColor,
+                                timeInSecForIosWeb: 1,
+                              );
+                              GroupService.ban(member.id, group.id);
+                            }
+                          ),
                           SizedBox(height: 25,),
                         ],
                       );                      

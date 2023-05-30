@@ -110,9 +110,6 @@ class GroupService {
     try{
       final response = await http.put(
         Uri.parse("${Constants.api}/groups/ban").replace(queryParameters: queryParams),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
       );
 
       return response.statusCode;

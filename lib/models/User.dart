@@ -1,14 +1,16 @@
+import 'package:peerconnect_flutter/models/EditProfileModel.dart';
+
 class User {
-  final String id;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final bool isConfirmed;
-  final String college;
-  final String major;
-  final String password;
-  final String? profilePicture;
-  final String? coverPicture;
+  String id;
+  String firstName;
+  String lastName;
+  String email;
+  bool isConfirmed;
+  String college;
+  String major;
+  String password;
+  String? profilePicture;
+  String? coverPicture;
 
   User({
     required this.id,
@@ -66,9 +68,33 @@ class User {
     );
   }
 
+  factory User.adapt(User user, EditProfileModel editProfileModel) {
+
+    return User(
+      id: user.id,
+      firstName: editProfileModel.firstName,
+      lastName: editProfileModel.lastName,
+      email: editProfileModel.email,
+      isConfirmed: user.isConfirmed,
+      college: editProfileModel.college,
+      major: editProfileModel.major,
+      password: user.password,
+      profilePicture: user.profilePicture,
+      coverPicture: user.coverPicture,
+    );
+
+    // return 
+    // user.firstName = editProfileModel.firstName;
+    // user.lastName = editProfileModel.lastName;
+    // user.email = editProfileModel.email;
+    // user.college = editProfileModel.college;
+    // user.major = editProfileModel.major;
+  }
+
   @override
   String toString() {
-    return 'User{id: $id, firstName: $firstName, lastName: $lastName}, profilePicture: ${profilePicture}';
+    return 'User{id: $id, firstName: $firstName, email: $lastName}, profilePicture: ${profilePicture}';
+    return 'User{id: $id, firstName: $firstName, email: $lastName}, profilePicture: ${profilePicture}';
   }
   
 }

@@ -50,7 +50,10 @@ class _GroupStatusButtonState extends State<GroupStatusButton> {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: (){
-                    Navigator.pop(context);
+                    GroupService.ban(widget.userId, widget.groupId).then((value) {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, "/home");
+                    });
                   }, 
                   child: Text("Confirm")
                 ),

@@ -12,6 +12,8 @@ class GroupDetailsModel {
   final List<User> pending;
   final List<Event> events;
   final List<Post> posts;
+  final List<dynamic> rules;
+  final bool isAdmin;
 
   GroupDetailsModel({
     required this.requestState,
@@ -21,6 +23,8 @@ class GroupDetailsModel {
     required this.pending,
     required this.events,
     required this.posts,
+    required this.rules,
+    required this.isAdmin,
   });
 
   factory GroupDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +36,8 @@ class GroupDetailsModel {
       pending: (json['pending'] as List).map((e) => User.fromJson(e)).toList(),
       events: (json['events'] as List).map((e) => Event.fromJson(e)).toList(),
       posts: (json['posts'] as List).map((e) => Post.fromJson(e)).toList(),
+      rules: json['rules'],
+      isAdmin: json['admin'],
     );
   }
 
@@ -53,6 +59,8 @@ class GroupDetailsModel {
       pending: [],
       events: [],
       posts: [],
+      rules: [],
+      isAdmin: false,
     );
   }
 

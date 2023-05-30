@@ -3,6 +3,7 @@ import 'package:peerconnect_flutter/screens/choice.dart';
 import 'package:peerconnect_flutter/screens/create_event.dart';
 import 'package:peerconnect_flutter/screens/create_group.dart';
 import 'package:peerconnect_flutter/screens/create_post.dart';
+import 'package:peerconnect_flutter/screens/edit_profile.dart';
 import 'package:peerconnect_flutter/screens/group.dart';
 import 'package:peerconnect_flutter/screens/groups.dart';
 import 'package:peerconnect_flutter/screens/post.dart';
@@ -30,5 +31,6 @@ class Routes {
     "/create_post": (BuildContext context) => const CreatePostScreen(),
     "/create_event": (BuildContext context) => const CreateEventScreen(),
     "/create_group": (BuildContext context) => const CreateGroupScreen(),
+    "/edit_profile": (BuildContext context) => const EditProfile(),
   }; 
 }

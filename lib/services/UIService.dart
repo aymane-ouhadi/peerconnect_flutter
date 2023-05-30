@@ -45,9 +45,9 @@ class UIService {
 
   static MaterialColor getRandomDarkColor() {
     final random = Random();
-    final red = random.nextInt(128) + 128;
-    final green = random.nextInt(128) + 128;
-    final blue = random.nextInt(128) + 128;
+    final red = 180;
+    final green = 100;
+    final blue = 180;
 
     return MaterialColor(
       Color.fromRGBO(red, green, blue, 1).value,

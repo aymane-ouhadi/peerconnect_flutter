@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:peerconnect_flutter/models/EditProfileModel.dart';
 import 'package:peerconnect_flutter/models/PostDetailsModel.dart';
 import 'package:peerconnect_flutter/models/User.dart';
 import 'package:peerconnect_flutter/models/UserProfileModel.dart';
@@ -85,6 +86,38 @@ class UserService {
     } else {
       throw Exception('Failed to load post');
     }
+  }
+
+  static Future<http.Response> editUser(
+    String userId,
+    EditProfileModel editProfileModel
+  ) async {
+
+    final queryParams = {
+      'userId': userId
+    };
+
+    try {
+
+      final response = await http.put(
+        Uri.parse("${Constants.api}/users/edit").replace(queryParameters: queryParams),
+        headers: {"Content-Type": "application/json"},
+        // body: editProfileModel.toJson() 
+        body: jsonEncode(editProfileModel) 
+      );
+
+      return response;
+    
+    } catch (e) {
+
+      print("error : $e");
+      return http.Response(
+        e.toString(), 
+        500
+      );
+      
+    }
+
   }
 
 }
